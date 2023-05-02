@@ -1,0 +1,14 @@
+.form{
+    width: 700px;
+    border: 1px solid black;
+    margin-bottom: 220px;
+}
+.upload-list-inline .ant-upload-list-item {
+    float: left;
+    width: 350px;
+    margin-inline-end: 8px;
+  }
+  
+  .ant-upload-rtl.upload-list-inline .ant-upload-list-item {
+    float: right;
+  }

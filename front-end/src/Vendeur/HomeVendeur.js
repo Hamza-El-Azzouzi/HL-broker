@@ -1,24 +1,32 @@
-import NavBar from "../includes/NavBar";
+import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
 import './HomeVendeur.css'
 import ShowArticle from "./comp/ShowArticle";
-import { Button } from 'antd';
+import AddArticle from './comp/AddArticle';
+import { } from 'react-router-dom/cjs/react-router-dom.min';
+
 
 
 
 
 export default function HomeVendeur() {
     return (
-        <>
-            <nav className="navbar navbar-expand-lg bg-body-tertiary">
-                <NavBar />
-            </nav>
+        <BrowserRouter>
+            <div className='VendurPage'>
+                <div className='VendeurNav'>
+                    <div className='box f_flex'>
+                    <Link to='/HomeVendeur'> <span>Demande</span></Link>
+                    </div>
+                    <div className='box f_flex'>
+                        <Link to='/HomeVendeur'> <span>Article</span></Link>
 
-            <div className="table">
-            
-            <Button type="primary" shape="round" size="large"><a href="/AddArticle" className="bi bi-plus-circle"> Primary Button</a></Button>
-                <ShowArticle />
+                    </div>
+                </div>
+
+                <Switch>
+                    <Route path='/HomeVendeur' exact index> <ShowArticle /></Route>
+                    <Route path='/HomeVendeur/AddArticle'> <AddArticle /></Route>
+                </Switch>
             </div>
-
-        </>
+        </BrowserRouter>
     )
 }
