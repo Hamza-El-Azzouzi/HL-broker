@@ -31,5 +31,8 @@ class User extends Model
     {
         $this->hasMany(Demande::class);
     }
+    public function Article(){
+        $this->hasMany(Article::class);
+    }
 
 }
