@@ -11,8 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('_demande', function (Blueprint $table) {
-            $table->id();
+        Schema::create('paniers', function (Blueprint $table) {
+            $table->bigIncrements('id_panier');
+
+            $table->foreignId('id_user')->references('id')->on('users')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('id_acheteur')->references('id_acheteur')->on('acheteurs')->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();
         });
     }
@@ -22,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('_demande');
+        Schema::dropIfExists('paniers');
     }
 };
