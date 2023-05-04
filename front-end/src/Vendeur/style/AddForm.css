@@ -1,14 +1,45 @@
-.form{
-    width: 700px;
-    border: 1px solid black;
-    margin-bottom: 220px;
+.form {
+  box-shadow: rgb(43 52 69 / 10%) 0px 5px 16px;
+  background-color: #fff;
+  border-radius: 10px;
+  text-align: justify;
+  display: inline-block;
+  width: 1000px;
+  align-items: center;
+  margin-bottom: 18px;
+  margin-left: 100px;
+  margin-top: 20px;
+  padding-bottom: 20px;
 }
+
 .upload-list-inline .ant-upload-list-item {
-    float: left;
-    width: 350px;
-    margin-inline-end: 8px;
-  }
-  
-  .ant-upload-rtl.upload-list-inline .ant-upload-list-item {
-    float: right;
-  }
+  float: left;
+  width: 350px;
+  margin-inline-end: 8px;
+}
+
+.ant-upload-rtl.upload-list-inline .ant-upload-list-item {
+  float: right;
+}
+
+.Btn {
+  width: 120px;
+  height: 35px;
+  margin: 18px 10px 0px 5px ;
+}
+.rightBtn{
+  margin-left: 610px;
+
+}
+.Enregistre{
+  background-color:#50C878;
+  color: whitesmoke;
+
+}
+.Enregistre::hover{
+  color: rgb(0, 0, 0);
+}
+.Retour{
+  position: relative;
+  margin-left: 800px;
+}

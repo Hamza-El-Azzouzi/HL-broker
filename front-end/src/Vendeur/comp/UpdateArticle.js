@@ -13,9 +13,17 @@ import {
 
 import '../style/AddForm.css'
 // import TextArea from 'antd/es/input/TextArea';
-export default function AddArticle() {
+export default function UpadateArticle() {
     const [type, setType] = useState()
-    const fileList = []
+    const fileList = [
+        {
+          uid: '-1',
+          name: 'test.png',
+          status: 'done',
+          url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+          thumbUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+        },
+    ]      
     const handlSubmit = () => {
         console.log(fileList)
         console.log("validate")
@@ -30,7 +38,7 @@ export default function AddArticle() {
         <div className='form'>
   
                 <Link to='/HomeVendeur/Dashboard'>
-                    <Button className='Btn Retour'>Retour</Button>
+                    <Button htmlType="submit" className='Btn Retour'>Retour</Button>
                 </Link>
 
 
@@ -42,7 +50,7 @@ export default function AddArticle() {
                 wrapperCol={{
                     span: 14,
                 }}
-                
+
                 layout="horizontal"
                 style={{
                     Width: '1000px',
@@ -176,6 +184,7 @@ export default function AddArticle() {
                         showUploadList={{
                             showRemoveIcon: true
                         }}
+                        fileList={fileList}
                         beforeUpload={(file) => {
                             console.log(file)
 

@@ -1,7 +1,10 @@
 import { Space, Table, Button } from 'antd';
 import { Link } from 'react-router-dom';
 import {Switch} from 'antd';
+// import { useState } from 'react';
+
 export default function ShowArticle() {
+
   const columns = [
     {
       title: 'Name',
@@ -19,7 +22,7 @@ export default function ShowArticle() {
       title: 'Disponibilter',
       render: (_, record) => (
         <Space size="middle" >
-            <Switch/>
+            <Switch defaultChecked/>
         </Space>
       ),
       key: 'address',
@@ -30,8 +33,8 @@ export default function ShowArticle() {
       key: 'action',
       render: (_, record) => (
         <Space size="middle">
-          <a href='/'>Update </a>
-          <a href='/'>Delete</a>
+          <Link to='/HomeVendeur/UpadateArticle'>Update</Link>
+          <Link to='/HomeVendeur/DeleteArticle'>Delete</Link>
         </Space>
       ),
     },

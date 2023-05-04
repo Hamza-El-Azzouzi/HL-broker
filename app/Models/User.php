@@ -25,14 +25,13 @@ class User extends Model
     public function Panier()
     {
         return $this->hasMany(Panier::class);
-    
     }
     public function Demande()
     {
         $this->hasMany(Demande::class);
     }
-    public function Article(){
+    public function Article()
+    {
         $this->hasMany(Article::class);
     }
-
 }
