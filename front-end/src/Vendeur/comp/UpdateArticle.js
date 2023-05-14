@@ -1,4 +1,4 @@
-import { UploadOutlined, DeleteOutlined } from '@ant-design/icons';
+import { DeleteOutlined } from '@ant-design/icons';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom'
 import { useParams, useHistory } from 'react-router-dom';
@@ -47,6 +47,7 @@ export default function UpadateArticle() {
         GetArticleData()
         GetCategorieData()
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
 

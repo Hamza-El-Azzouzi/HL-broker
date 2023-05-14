@@ -21,10 +21,6 @@ export default function ShowArticle() {
         message.error('Une erreur est survenue lors de la suppression des données.');
       });
   };
-  const cancel = (e) => {
-    console.log(e);
-    message.error(e);
-  };
   const columns = [
     {
       title: 'Id',

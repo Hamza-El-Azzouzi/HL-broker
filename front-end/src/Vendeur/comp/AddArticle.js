@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Form, Input, Button, message, Select } from 'antd';
 import '../style/AddForm.css'
 import axios from 'axios';
-import { useParams, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 const { TextArea } = Input;
 
 const AddArticle = () => {
