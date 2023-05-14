@@ -11,9 +11,6 @@ class Panier extends Model
     public function User(){
         $this->belongsTo(User::class);
     }
-    public function Acheteur(){
-        $this->belongsTo(Acheteur::class);
-    }
     public function Article(){
         return $this->hasMany(Article::class)
         ->using(Article_Panier::class);

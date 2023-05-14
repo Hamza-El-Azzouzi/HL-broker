@@ -34,7 +34,7 @@ class AvisController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Avis $avis)
+    public function show(Request $request)
     {
         //
     }
@@ -42,7 +42,7 @@ class AvisController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Avis $avis)
+    public function edit(Request $request)
     {
         //
     }
@@ -50,7 +50,7 @@ class AvisController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Avis $avis)
+    public function update(Request $request)
     {
         //
     }
@@ -58,7 +58,7 @@ class AvisController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Avis $avis)
+    public function destroy(Request $request)
     {
         //
     }

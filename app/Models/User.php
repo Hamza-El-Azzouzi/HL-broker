@@ -8,16 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class User extends Model
 {
     use HasFactory;
-
-
-    public function Vendeur()
-    {
-        $this->hasMany(Vendeur::class);
-    }
-    public function Acheteur()
-    {
-        $this->hasMany(Acheteur::class);
-    }
+    protected $fillable = [
+        'id_acheteur',
+        'id_vendeur',
+        'name',
+        'email',
+        'tel',
+        'image',
+        'password'
+    ];
     public function Avis()
     {
         $this->hasMany(Avis::class);

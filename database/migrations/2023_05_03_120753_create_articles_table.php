@@ -13,14 +13,17 @@ return new class extends Migration
     {
         Schema::create('articles', function (Blueprint $table) {
             $table->bigIncrements('id_article');
-            $table->foreignId('id_categorie')->references('id_categorie')->on('categories')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('id_categorie')->references('id_categorie')->on('categories')->cascadeOnDelete()->cascadeOnUpdate()->nullable();
             $table->foreignId('id_user')->references('id')->on('users')->cascadeOnDelete()->cascadeOnUpdate();
-            $table->foreignId('id_vendeur')->references('id_vendeur')->on('vendeurs')->cascadeOnDelete()->cascadeOnUpdate();
             $table->string('name_article');
             $table->string('description');
+            $table->integer('prix');
+            $table->binary('Image1')->nullable();
+            $table->binary('Image2')->nullable();
+            $table->binary('Image3')->nullable();
+            $table->binary('Image4')->nullable();
             $table->string('type');
-            $table->binary('image');
-            $table->boolean('disponibilite');
+            $table->string('disponibilite');
             $table->timestamps();
         });
     }

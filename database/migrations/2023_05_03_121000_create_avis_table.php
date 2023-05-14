@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('avis', function (Blueprint $table) {
             $table->bigIncrements('id_avis');
             $table->foreignId('id_user')->references('id')->on('users')->cascadeOnDelete()->cascadeOnUpdate();
-            $table->foreignId('id_acheteur')->references('id_acheteur')->on('acheteurs')->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId('id_article')->references('id_article')->on('articles')->cascadeOnDelete()->cascadeOnUpdate();
             $table->integer('nbr_etoile');
             $table->string('avis');

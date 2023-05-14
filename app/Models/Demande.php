@@ -12,9 +12,6 @@ class Demande extends Model
     public function User(){
         $this->belongsTo(User::class);
     }
-    public function Acheteur(){
-        $this->belongsTo(Acheteur::class);
-    }
     public function Article(){
         $this->belongsTo(Article::class);
     }

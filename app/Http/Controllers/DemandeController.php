@@ -34,7 +34,7 @@ class DemandeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Demande $demande)
+    public function show(Request $request)
     {
         //
     }
@@ -42,7 +42,7 @@ class DemandeController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Demande $demande)
+    public function edit(Request $request)
     {
         //
     }
@@ -50,7 +50,7 @@ class DemandeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Demande $demande)
+    public function update(Request $request)
     {
         //
     }
@@ -58,7 +58,7 @@ class DemandeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Demande $demande)
+    public function destroy(Request $request)
     {
         //
     }

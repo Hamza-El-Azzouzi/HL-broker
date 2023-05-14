@@ -9,19 +9,23 @@ class Article extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'id_categorie',
+        'id_user',
+        'id_vendeur',
+        'id_acheteur',
         'name_article',
         'description',
         'type',
-        'image',
+        'prix',
+        'image1',
+        'image2',
+        'image3',
+        'image4',
         'disponibilite',
     ];
     public function Categorie()
     {
         $this->belongsTo(Categorie::class);
-    }
-    public function Vendeur()
-    {
-        $this->belongsTo(Vendeur::class);
     }
     public function User()
     {
@@ -34,11 +38,13 @@ class Article extends Model
     public function Panier()
     {
         return $this->belongsToMany(Panier::class)
-        ->using(Article_Panier::class);
+            ->using(Article_Panier::class);
     }
     public function Demande()
     {
         $this->hasMany(Demande::class);
     }
-
+    public function Images(){
+        return $this->hasMany(Image::class);
+    }
 }

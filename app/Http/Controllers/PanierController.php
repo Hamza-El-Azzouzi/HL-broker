@@ -34,7 +34,7 @@ class PanierController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Panier $panier)
+    public function show(Request $request)
     {
         //
     }
@@ -42,7 +42,7 @@ class PanierController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Panier $panier)
+    public function edit(Request $request)
     {
         //
     }
@@ -50,7 +50,7 @@ class PanierController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Panier $panier)
+    public function update(Request $request)
     {
         //
     }
@@ -58,7 +58,7 @@ class PanierController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Panier $panier)
+    public function destroy(Request $requestr)
     {
         //
     }

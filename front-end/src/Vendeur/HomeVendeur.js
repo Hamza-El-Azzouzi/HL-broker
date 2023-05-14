@@ -6,6 +6,7 @@ import AddArticle from './comp/AddArticle';
 import Dashboard from './comp/Dashboard';
 import UpadateArticle from './comp/UpdateArticle';
 import ShowDemande from './comp/ShowDemande';
+import NotFound from '../Exception/Comp/404';
 
 
 
@@ -33,9 +34,10 @@ export default function HomeVendeur() {
                     <Route path='/HomeVendeur' exact index  component={Dashboard} /> 
                     <Route path='/HomeVendeur/Article' component={ShowArticle} /> 
                     <Route path='/HomeVendeur/AddArticle' component={AddArticle} /> 
-                    <Route path='/HomeVendeur/UpadateArticle' component={UpadateArticle} />
+                    <Route path='/HomeVendeur/UpadateArticle/:id' component={UpadateArticle} />
+                    <Route path='/HomeVendeur/UpadateArticle/:id' component={ShowArticle} />
                     <Route path='/HomeVendeur/Demande' component={ShowDemande}/ > 
-                    <Route path="/NotFound" />
+                    <Route path="/NotFound" component={<NotFound/>} />
                     <Redirect to="/NotFound" />
                 </Switch>
             </div>
