@@ -1,26 +1,12 @@
 import { Space, Table, Button } from 'antd';
 import { Link } from 'react-router-dom';
-import { Popconfirm, message } from 'antd';
+// import { Switch } from 'antd';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { Spin } from 'antd';
-
-
-// import { useParams } from 'react-router-dom';
+import VendeurNav from './VendeurNav';
 export default function ShowArticle() {
   const [test, setTest] = useState()
-  // const { id } = useParams();
-
-  const handleDelete = async (id) => {
-    axios.delete(`http://localhost:8000/api/article/${id}`)
-      .then((response) => {
-        message.success('Les données ont été supprimées avec succès.');
-        window.location.reload(true)
-      })
-      .catch((error) => {
-        message.error('Une erreur est survenue lors de la suppression des données.');
-      });
-  };
   const columns = [
     {
       title: 'Id',
@@ -45,15 +31,8 @@ export default function ShowArticle() {
       render: (_, record) => (
         <Space size="middle">
           <Link to={`/HomeVendeur/UpadateArticle/${record.key}`}>Update</Link>
-          {/* <Link to={`/HomeVendeur/DeleteArticle/${record.key}`}>Delete</Link> */}
-          <Popconfirm
-            title="Êtes-vous sûr de vouloir supprimer ces données?"
-            onConfirm={() =>  handleDelete(record.key)}
-            okText="Oui"
-            cancelText="Non"
-          >
-            <Button type="link">Supprimer</Button>
-          </Popconfirm>
+          <Link to={`/HomeVendeur/DeleteArticle/${record.key}`}>Dispnible</Link>
+          <Link to={`/HomeVendeur/DeleteArticle/${record.key}`}>Delete</Link>
         </Space>
       ),
     },
@@ -94,17 +73,23 @@ export default function ShowArticle() {
     </div>)
   }
   return (
+    <main>
+      <section className="section">
+        <div className='container'>
+          <VendeurNav />
+          <div className='wrapper'>
+            <div className="table">
+              <div className='AddBtn'>
+                <Button type="primary" shape="round" size="large"><Link to="/HomeVendeur/AddArticle" className="bi bi-plus-circle"> Ajouter Une Article</Link></Button>
+              </div>
+              <Table columns={columns} dataSource={data} />
+            </div>
+          </div>
 
-    <div className="table">
-      <div className='AddBtn'>
-        <Button type="primary" shape="round" size="large"><Link to="/HomeVendeur/AddArticle" className="bi bi-plus-circle"> Ajouter Une Article</Link></Button>
-      </div>
-      <Table columns={columns} dataSource={data} />
 
-
-
-    </div>
-
+        </div>
+      </section>
+    </main>
 
   )
 }

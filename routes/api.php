@@ -22,3 +22,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/categorie', [App\Http\Controllers\CategorieController::class, 'index']);
 Route::post('/categorie', [App\Http\Controllers\CategorieController::class, 'store']);
 Route::resource('/article', App\Http\Controllers\ArticleController::class);
+Route::get('/getArticle', [App\Http\Controllers\ArticleController::class, 'getArticle']);
+Route::get('/getArticleForHome', [App\Http\Controllers\ArticleController::class, 'getArticleForHome']);

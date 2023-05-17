@@ -18,10 +18,7 @@ return new class extends Migration
             $table->string('name_article');
             $table->string('description');
             $table->integer('prix');
-            $table->binary('Image1')->nullable();
-            $table->binary('Image2')->nullable();
-            $table->binary('Image3')->nullable();
-            $table->binary('Image4')->nullable();
+            $table->text('localisation');
             $table->string('type');
             $table->string('disponibilite');
             $table->timestamps();

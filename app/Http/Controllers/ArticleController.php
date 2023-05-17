@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use PhpParser\JsonDecoder;
 
 class ArticleController extends Controller
 {
@@ -26,12 +27,48 @@ class ArticleController extends Controller
         ]);
     }
 
+    public function Disponible($id)
+    {
+        //
+        $article = DB::table('articles')->where('id_article',$id );
+    //     $JsonArticle = response()->json($article);
+    //    if($JsonArticle.disponibilite){}
+       
+    }
+
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
         //
+    }
+
+    public function getArticle()
+    {
+        //
+        $article =DB::table('articles')
+        ->leftJoin('images', 'articles.id_article', '=', 'images.id_article')
+        ->select('articles.*', 'images.images', 'images.id')->distinct()
+        ->get();
+        // $article = Article::all();
+        return response()->json([
+            'success' => 'greaat work',
+            'data' => $article
+        ]);
+    }
+    public function getArticleForHome()
+    {
+        //
+        $article =DB::table('articles')
+        ->leftJoin('images', 'articles.id_article', '=', 'images.id_article')
+        ->select('articles.*', 'images.images', 'images.id')->distinct()->limit(12)
+        ->get();
+        // $article = Article::all();
+        return response()->json([
+            'success' => 'greaat work',
+            'data' => $article
+        ]);
     }
 
     /**
@@ -68,9 +105,18 @@ class ArticleController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Request $request)
+    public function show ($id)
     {
         //
+        $article =DB::table('articles')
+        ->leftJoin('images', 'articles.id_article', '=', 'images.id_article')
+        ->select('articles.*', 'images.images', 'images.id')->distinct()->where('articles.id_article',$id)
+        ->get();
+        // $article = Article::all();
+        return response()->json([
+            'success' => 'greaat work',
+            'data' => $article
+        ]);
 
     }
 
