@@ -3,10 +3,35 @@ import { Link } from 'react-router-dom';
 // import { Switch } from 'antd';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { Spin } from 'antd';
+import { Spin ,message ,Popconfirm} from 'antd';
 import VendeurNav from './VendeurNav';
 export default function ShowArticle() {
   const [test, setTest] = useState()
+
+  const handleDelete = async (id) => {
+    axios.delete(`http://localhost:8000/api/article/${id}`)
+      .then((response) => {
+        message.success('Les données ont été supprimées avec succès.');
+        window.location.reload(true)
+      })
+      .catch((error) => {
+        message.error('Une erreur est survenue lors de la suppression des données.');
+      });
+  };
+
+  const handleModifier = async (id) => {
+    axios.get(`http://localhost:8000/api/disponible/${id}`)
+      .then((response) => {
+        message.success('Les données ont été modifer avec succès.');
+        window.location.reload(true)
+      })
+      .catch((error) => {
+        message.error('Une erreur est survenue lors de la Modification des données.');
+      });
+  };
+
+
+
   const columns = [
     {
       title: 'Id',
@@ -31,8 +56,25 @@ export default function ShowArticle() {
       render: (_, record) => (
         <Space size="middle">
           <Link to={`/HomeVendeur/UpadateArticle/${record.key}`}>Update</Link>
-          <Link to={`/HomeVendeur/DeleteArticle/${record.key}`}>Dispnible</Link>
-          <Link to={`/HomeVendeur/DeleteArticle/${record.key}`}>Delete</Link>
+          <Popconfirm
+            title="Êtes-vous sûr de vouloir Modifier ce données?"
+            onConfirm={() =>  handleModifier(record.key)}
+            okText="Oui"
+            cancelText="Non"
+          >
+            {record.disponibilite ==='true'? (<Button type="link">Disponible</Button>):(<Button type="link">InDisponible</Button>)}
+            
+          </Popconfirm>
+
+
+          <Popconfirm
+            title="Êtes-vous sûr de vouloir supprimer ces données?"
+            onConfirm={() =>  handleDelete(record.key)}
+            okText="Oui"
+            cancelText="Non"
+          >
+            <Button type="link">Supprimer</Button>
+          </Popconfirm>
         </Space>
       ),
     },

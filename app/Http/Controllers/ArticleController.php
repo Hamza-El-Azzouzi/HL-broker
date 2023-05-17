@@ -29,13 +29,25 @@ class ArticleController extends Controller
 
     public function Disponible($id)
     {
-        //
-        $article = DB::table('articles')->where('id_article',$id );
-    //     $JsonArticle = response()->json($article);
-    //    if($JsonArticle.disponibilite){}
-       
+        $disponible = DB::select('SELECT disponibilite FROM articles WHERE id_article = ?', [$id]);
+    
+        if ($disponible && $disponible[0]->disponibilite == 'true') {
+            $update = [
+                'disponibilite' => 'false'
+            ];
+            Article::where('id_article', $id)->update($update);
+        } else {
+            $update = [
+                'disponibilite' => 'true'
+            ];
+            Article::where('id_article', $id)->update($update);
+        }
+    
+        return response()->json([
+            'success' => 'great work',
+            'data' => $disponible
+        ]);
     }
-
     /**
      * Show the form for creating a new resource.
      */

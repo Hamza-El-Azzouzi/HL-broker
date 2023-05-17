@@ -3,7 +3,7 @@
     "scripts": {
         "dev": "vite",
         "build": "vite build",
-        "start": "concurrently \"php artisan serve\" \"cd front-end && npm start\""
+        "start": "concurrently \"php artisan serve\" \"cd xbeat-main && npm start\""
     },
     "devDependencies": {
         "axios": "^1.1.2",

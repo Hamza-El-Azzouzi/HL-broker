@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Input, Button, message, Select, Radio, InputNumber } from 'antd';
+import { Form, Input, Button, message, Select, Radio, InputNumber ,Upload} from 'antd';
 import '../../styles/partials/components/AddForm.css'
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import VendeurNav from './VendeurNav';
-import { DeleteOutlined } from '@ant-design/icons';
+import { DeleteOutlined ,UploadOutlined } from '@ant-design/icons';
 const { TextArea } = Input;
 
 const AddArticle = () => {
@@ -87,7 +87,7 @@ const AddArticle = () => {
                                 label="Article Name"
                                 name="name_article"
                                 rules={[{ required: true, message: 'Please enter article name' }]}
-                                style={{ width: "60%", margin: "0 20% 4% 20%" ,textAlign:"justify" }} >
+                                style={{ width: "60%", margin: "0 20% 4% 20%", textAlign: "justify" }} >
                                 <Input />
                             </Form.Item>
                             <Form.Item
@@ -95,7 +95,7 @@ const AddArticle = () => {
                                 name="description"
                                 rules={[{ required: true, message: 'Please enter description' },
                                 { pattern: /^.{250,}$/, message: 'Minimum 250 characters' }]}
-                                style={{ width: "60%", margin: "0 20% 4% 20%",textAlign:"justify"}}>
+                                style={{ width: "60%", margin: "0 20% 4% 20%", textAlign: "justify" }}>
                                 <TextArea
                                     rows={4}
                                     style={{ resize: 'none' }}
@@ -103,12 +103,12 @@ const AddArticle = () => {
                                     minLength={250}
                                     placeholder="Saisir la Description de votre Article" />
                             </Form.Item>
-                            
+
                             <Form.Item
                                 label="Type"
                                 name="type"
                                 rules={[{ required: true, message: 'Please enter type' }]}
-                                style={{ width: "60%", margin: "0 20% 4% 20%" ,textAlign:"justify" }}>
+                                style={{ width: "60%", margin: "0 20% 4% 20%", textAlign: "justify" }}>
                                 <Radio.Group onChange={(e) => setType(e.target.value)}>
                                     <Radio value="Louer"  > Louer </Radio>
                                     <Radio value="Vendre" > Vendre </Radio>
@@ -116,15 +116,15 @@ const AddArticle = () => {
                             </Form.Item>
                             {type === "Louer" ?
                                 <Form.Item
-                                   
+
                                     label="Prix Par Jour"
                                     name="prix"
                                     rules={[
                                         { required: true, message: 'Ce champs est obligatoire' },
                                         { pattern: /^[0-9\s]+$/, message: 'Le Prix Doit Etre En Numerique !' }
                                     ]}
-                                    style={{ width: "60%", margin: "0 20% 4% 20%" , padding: '5px 10px 5px 10px' ,textAlign:"justify" }}
-                                    >
+                                    style={{ width: "60%", margin: "0 20% 4% 20%", padding: '5px 10px 5px 10px', textAlign: "justify" }}
+                                >
                                     <InputNumber
                                         addonAfter={'DH'}
                                         placeholder='10.000'
@@ -141,7 +141,7 @@ const AddArticle = () => {
                                     rules={[
                                         { required: true, message: 'Ce champs est obligatoire' }
                                     ]}
-                                    style={{ width: "70%", margin: "0 20% 4% 20%", padding: '5px 10px 5px 10px' ,textAlign:"justify"  }}>
+                                    style={{ width: "70%", margin: "0 20% 4% 20%", padding: '5px 10px 5px 10px', textAlign: "justify" }}>
                                     <InputNumber
                                         addonAfter={'DH'}
                                         placeholder='10.000'
@@ -166,7 +166,7 @@ const AddArticle = () => {
                                 rules={[
                                     { required: true, message: 'Ce champs est obligatoire' }
                                 ]}
-                                style={{ width: "60%", margin: "0 20% 4% 20%", padding: '5px 10px 5px 10px',textAlign:"justify" }}>
+                                style={{ width: "60%", margin: "0 20% 4% 20%", padding: '5px 10px 5px 10px', textAlign: "justify" }}>
                                 <Select>
                                     {DataCategorie !== undefined ? (DataCategorie.map(x => (
                                         <Select.Option value={x.id_categorie} key={x.id_categorie} selcted >{x.name_categorie}</Select.Option>
@@ -176,7 +176,18 @@ const AddArticle = () => {
                             <Form.Item
                                 label="Images"
                                 name='images'
-                                style={{ width: "60%", margin: "0 20% 4% 20%",textAlign:"justify" }}>
+                                style={{ width: "60%", margin: "0 20% 4% 20%", textAlign: "justify" }}>
+                                {/* <Upload
+                                   beforeUpload={(file)=>{
+                                    console.log(file);
+                                    return false
+                                   }}
+                                    listType="picture"
+                                    maxCount={3}
+                                    multiple
+                                >
+                                    <Button icon={<UploadOutlined />}>Upload (Max: 3)</Button>
+                                </Upload> */}
                                 <input type='file' accept='.png,.jpg,.jpeg' name='images' onChange={handleFileUpload} multiple />
                             </Form.Item>
                             <Form.Item>

@@ -24,3 +24,5 @@ Route::post('/categorie', [App\Http\Controllers\CategorieController::class, 'sto
 Route::resource('/article', App\Http\Controllers\ArticleController::class);
 Route::get('/getArticle', [App\Http\Controllers\ArticleController::class, 'getArticle']);
 Route::get('/getArticleForHome', [App\Http\Controllers\ArticleController::class, 'getArticleForHome']);
+
+Route::put('/disponible/{id}', [App\Http\Controllers\ArticleController::class, 'Disponible']);
