@@ -1,0 +1,104 @@
+.Dashboard {
+    width: auto;
+    height: 550px;
+    margin: 90px 20px 30px 20px;
+    box-shadow: rgb(43 52 69 / 10%) 0px 5px 16px;
+    background-color: #000000;
+    border-radius: 10px;
+    text-align: justify;
+    
+
+}
+.wrapper{
+    margin-top: 50px;
+}
+
+.Demande {
+    text-align: justify;
+    display: inline-block;
+    height: 500px;
+    width: 250px;
+    padding:5px auto 0 0;
+    margin-right: 110px;
+    position: absolute;
+    right: 0;
+}
+
+.Chart {
+    width: auto;
+    height: 500px;
+    margin:20px 40px 0 40px;
+}
+
+.Lien {
+    position: absolute;
+    bottom: 0;
+    margin: 0 0 0 20px;
+}
+
+.title {
+    margin: 20px 0 0 0;
+}
+
+.Card {
+    margin-top: 20px;
+}
+
+/* @media screen and (max-width: 390px) {
+    .Chart{
+        display: none;
+    }
+    .Demande {
+        text-align: justify;
+        display: inline-block;
+        height: 200px;
+        width: 250px;
+        margin-right: 10px;
+        position: absolute;
+        right: 0;
+    }
+     
+    .Lien {
+        position: absolute;
+        bottom: 0;
+        margin: 0 0 10px 10px;
+    }
+    
+    .title {
+        margin: 10px 0 0 0;
+    }
+    
+    .Card {
+        margin-top: 15px;
+    }
+} */
+
+
+
+/* @media screen and (min-width: 768px) and ( max-width: 1000px) {
+    .Chart{
+        width: 600px;
+        display: block;
+    }
+    .Demande {
+        text-align: justify;
+        height: 200px;
+        width: 250px;
+        display: none;
+    }
+     
+    .Lien {
+
+        bottom: 0;
+        margin: 0 0 10px 10px;
+    }
+    
+    .title {
+        margin: 10px 0 0 0;
+    }
+    
+    .Card {
+        margin: 15px 0 0 20px;
+        display: inline-block;
+    }
+} */

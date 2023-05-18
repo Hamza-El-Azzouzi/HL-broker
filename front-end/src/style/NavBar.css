@@ -2,10 +2,11 @@ nav {
     position: fixed;
     top: 0;
     width: 100%;
+    z-index: 6;
   }
   
   .navbar {
-    background-color: #c1c2b0;
+    background-color: #522B5B;
     color: #fff;
     padding: 10px;
     text-align: center;

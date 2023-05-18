@@ -1,9 +1,9 @@
 {
     "private": true,
     "scripts": {
-        "dev": "vite --port 3000",
+        "dev": "vite",
         "build": "vite build",
-        "start": "concurrently \"php artisan serve\" \"cd react && npm run dev\""
+        "start": "concurrently \"php artisan serve\" \"cd xbeat-main && npm start\""
     },
     "devDependencies": {
         "axios": "^1.1.2",

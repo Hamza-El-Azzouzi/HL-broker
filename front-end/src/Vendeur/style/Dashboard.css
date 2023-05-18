@@ -1,0 +1,36 @@
+.Dashboard{
+    width: 1220px;
+    height: 500px;
+    margin: 40px 0 97px 60px;
+    box-shadow: rgb(43 52 69 / 10%) 0px 5px 16px;
+    background-color: #fff;
+    border-radius: 10px;
+    text-align: justify;
+
+}
+.Demande{
+
+    text-align: justify;
+    display: inline-block;
+    height: 500px;
+    width: 250px;
+margin-right: 60px;
+    position: absolute;
+    right: 0;
+}
+.Chart{
+    width: 900px;
+    height: 500px;
+    margin-left: 10px;
+}
+.Lien{
+    position: absolute;
+    bottom: 0;
+    margin:0 0 20px 20px ;
+}
+.title{
+    margin: 20px 0 0 0 ;
+}
+.Card{
+    margin-top: 20px;
+}

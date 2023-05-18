@@ -1,0 +1,44 @@
+// Base
+@import "./partials/base/variables";
+@import "./partials/base/mixins";
+@import "./partials/base/reset";
+@import "./partials/base/common";
+
+
+// Components
+@import "./partials/components/preloader";
+@import "./partials/components/header";
+@import "./partials/components/footer";
+@import "./partials/components/backtop";
+@import "./partials/components/form";
+@import "./partials/components/searchbar";
+@import "./partials/components/filterbar";
+@import "./partials/components/quantity_box";
+@import "./partials/components/empty_view";
+
+
+// Pages
+@import "./partials/pages/hero";
+@import "./partials/pages/featured";
+@import "./partials/pages/products";
+@import "./partials/pages/product_details";
+@import "./partials/pages/product_summary";
+@import "./partials/pages/cart";
+@import "./partials/pages/related";
+@import "./partials/pages/services";
+@import "./partials/pages/error_page";
+
+.Spinner{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: red;
+  }
+  .content {
+    padding: 50px;
+    // background: rgba(24, 57, 207, 0.801);
+    border-radius: 4px;
+    font-size: larger;
+    font-weight: bolder;
+  }

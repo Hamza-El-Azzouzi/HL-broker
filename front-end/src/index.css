@@ -5,9 +5,20 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* background: radial-gradient(circle at 60% 40%, #bbbbbb 25%, transparent 26%),radial-gradient(circle at 40% 60%, #bbbbbb80 25%, transparent 26%) ;
+  background-size: 1em 1em;
+  background-color: #ffffff;
+  opacity: 1 */
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.Spinner{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+

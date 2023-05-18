@@ -1,84 +1,110 @@
-import { Space, Table, Tag } from 'antd';
-export default function ShowArticle(){
-    const columns = [
-        {
-          title: 'Name',
-          dataIndex: 'name',
-          key: 'name',
-          render: (text) => <a href='/'>{text}</a>,
-        },
-        {
-          title: 'Age',
-          dataIndex: 'age',
-          key: 'age',
-        },
-        {
-          title: 'Address',
-          dataIndex: 'address',
-          key: 'address',
-        },
-        {
-          title: 'Tags',
-          key: 'tags',
-          dataIndex: 'tags',
-          render: (_, { tags }) => (
-            <>
-              {tags.map((tag) => {
-                let color = tag.length > 5 ? 'geekblue' : 'green';
-                if (tag === 'loser') {
-                  color = 'volcano';
-                }
-                return (
-                  <Tag color={color} key={tag}>
-                    {tag.toUpperCase()}
-                  </Tag>
-                );
-              })}
-            </>
-          ),
-        },
-        {
-          title: 'Action',
-          key: 'action',
-          render: (_, record) => (
-            <Space size="middle">
-              <a href='/'>Invite {record.name}</a>
-              <a href='/'>Delete</a>
-            </Space>
-          ),
-        },
-      ];
-      const data = [
-        {
-          key: '1',
-          name: 'John Brown',
-          age: 32,
-          address: 'New York No. 1 Lake Park',
-          tags: ['nice', 'developer'],
-        },
-        {
-          key: '2',
-          name: 'Jim Green',
-          age: 42,
-          address: 'London No. 1 Lake Park',
-          tags: ['loser'],
-        },
-        {
-          key: '3',
-          name: 'Joe Black',
-          age: 32,
-          address: 'Sydney No. 1 Lake Park',
-          tags: ['cool', 'teacher'],
-        },
-        {
-            key: '3',
-            name: 'Joe Black',
-            age: 32,
-            address: 'Sydney No. 1 Lake Park',
-            tags: ['cool', 'teacher'],
-          }
-      ];
-      return(
-        <Table columns={columns} dataSource={data} />
+import { Space, Table, Button } from 'antd';
+import { Link } from 'react-router-dom';
+import { Popconfirm, message } from 'antd';
+import axios from 'axios';
+import { useState, useEffect } from 'react';
+import { Spin } from 'antd';
+
+
+// import { useParams } from 'react-router-dom';
+export default function ShowArticle() {
+  const [test, setTest] = useState()
+  // const { id } = useParams();
+
+  const handleDelete = async (id) => {
+    axios.delete(`http://localhost:8000/api/article/${id}`)
+      .then((response) => {
+        message.success('Les données ont été supprimées avec succès.');
+        window.location.reload(true)
+      })
+      .catch((error) => {
+        message.error('Une erreur est survenue lors de la suppression des données.');
+      });
+  };
+  const columns = [
+    {
+      title: 'Id',
+      dataIndex: 'key',
+      key: 'key',
+    },
+    {
+      title: 'Name',
+      dataIndex: 'name_article',
+      key: 'name_article',
+    },
+
+    {
+      title: 'Type',
+      dataIndex: 'type',
+      key: 'type',
+    },
+    {
+      title: 'Action',
+      key: 'action',
+      dataIndex: 'id_article',
+      render: (_, record) => (
+        <Space size="middle">
+          <Link to={`/HomeVendeur/UpadateArticle/${record.key}`}>Update</Link>
+          {/* <Link to={`/HomeVendeur/DeleteArticle/${record.key}`}>Delete</Link> */}
+          <Popconfirm
+            title="Êtes-vous sûr de vouloir supprimer ces données?"
+            onConfirm={() =>  handleDelete(record.key)}
+            okText="Oui"
+            cancelText="Non"
+          >
+            <Button type="link">Supprimer</Button>
+          </Popconfirm>
+        </Space>
+      ),
+    },
+  ];
+
+  const FetchData = () => {
+    axios.get('http://localhost:8000/api/article')
+      .then(response => {
+        setTest(response.data.data)
+        // console.log()
+      }
       )
+
+  }
+
+
+  useEffect(() => {
+    FetchData()
+  }, [])
+
+
+
+
+
+  const data = test !== undefined ? (test.map(x => ({
+    key: x.id_article,
+    name_article: x.name_article,
+    type: x.type,
+
+  }))) : null
+
+  if (!data) {
+
+    (<div className="table">
+      <Space size="large" className='Spinner'>
+        <Spin size="large" />
+      </Space>
+    </div>)
+  }
+  return (
+
+    <div className="table">
+      <div className='AddBtn'>
+        <Button type="primary" shape="round" size="large"><Link to="/HomeVendeur/AddArticle" className="bi bi-plus-circle"> Ajouter Une Article</Link></Button>
+      </div>
+      <Table columns={columns} dataSource={data} />
+
+
+
+    </div>
+
+
+  )
 }

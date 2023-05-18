@@ -1,24 +1,46 @@
-import NavBar from "../includes/NavBar";
+import { BrowserRouter, Switch, Route, Link ,Redirect } from 'react-router-dom';
 import './HomeVendeur.css'
 import ShowArticle from "./comp/ShowArticle";
-import { Button } from 'antd';
+import AddArticle from './comp/AddArticle';
+
+import Dashboard from './comp/Dashboard';
+import UpadateArticle from './comp/UpdateArticle';
+import ShowDemande from './comp/ShowDemande';
+import NotFound from '../Exception/Comp/404';
+
+
 
 
 
 
 export default function HomeVendeur() {
     return (
-        <>
-            <nav className="navbar navbar-expand-lg bg-body-tertiary">
-                <NavBar />
-            </nav>
+        <BrowserRouter>
+            <div className='VendurPage'>
+                <div className='VendeurNav'>
+                    <div className='box f_flex'>
+                        <Link to='/HomeVendeur'> <span>Dashboard</span></Link>
+                    </div>
+                    <div className='box f_flex'>
+                        <Link to='/HomeVendeur/Demande'> <span>Demande</span></Link>
+                    </div>
+                    <div className='box f_flex'>
+                        <Link to='/HomeVendeur/Article'> <span>Article</span></Link>
+                    </div>
+                </div>
 
-            <div className="table">
-            
-            <Button type="primary" shape="round" size="large"><a href="/AddArticle" className="bi bi-plus-circle"> Primary Button</a></Button>
-                <ShowArticle />
+                <Switch>
+                   
+                    <Route path='/HomeVendeur' exact index  component={Dashboard} /> 
+                    <Route path='/HomeVendeur/Article' component={ShowArticle} /> 
+                    <Route path='/HomeVendeur/AddArticle' component={AddArticle} /> 
+                    <Route path='/HomeVendeur/UpadateArticle/:id' component={UpadateArticle} />
+                    <Route path='/HomeVendeur/UpadateArticle/:id' component={ShowArticle} />
+                    <Route path='/HomeVendeur/Demande' component={ShowDemande}/ > 
+                    <Route path="/NotFound" component={<NotFound/>} />
+                    <Redirect to="/NotFound" />
+                </Switch>
             </div>
-
-        </>
+        </BrowserRouter>
     )
 }

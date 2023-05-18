@@ -40,6 +40,11 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'api' => [
+            'driver' => 'jwt',
+            'provider' => 'users',
+            'hash' => true,
+        ],
     ],
 
     /*
@@ -97,6 +102,12 @@ return [
             'expire' => 60,
             'throttle' => 60,
         ],
+    ],
+    
+    'jwt' => [
+        'provider' => 'users',
+        'secret' => env('JWT_SECRET'),
+        'ttl' => 60, // token expiration time in minutes
     ],
 
     /*

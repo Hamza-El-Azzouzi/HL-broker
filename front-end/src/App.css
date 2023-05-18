@@ -1,5 +1,4 @@
 .App {
-  text-align: center;
   margin: 0;
   width: 100%;
   padding: 0;
@@ -19,7 +18,7 @@
   height: fit-content;
   padding: 15px 0;
   border-radius: 5px;
-  margin-top: 40px;
+  margin-top: 90px;
   margin-left: 40px;
   left: 10%;
   text-align: justify;
@@ -129,17 +128,7 @@
 
 /*--------ArticelSection--------------------*/
 
-footer {
-  background-color: #333;
-  color: #fff;
-  padding: 10px;
-  text-align: center;
-  position: relative;
-  width: 100%;
-  bottom: 0;
 
-
-}
 
 /*--------search----------*/
 .search-bar {
