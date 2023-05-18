@@ -8,7 +8,7 @@ import useActive from '../../hooks/useActive';
 
 const ProductCard = (props) => {
 
-    const { id_article, images, name_article, info, prix,  } = props;
+    const { id_article, image, name_article, prix,  } = props;
 
     const { addItem } = useContext(cartContext);
     const { active, handleActive, activeClass } = useActive(false);
@@ -35,7 +35,7 @@ const ProductCard = (props) => {
             <div className="card products_card">
                 <figure className="products_img">
                     <Link to={`/product-details/${id_article}`}>
-                        <img src={'Projet_fin_formation/ProjetFinFormation/storage/app/'+images} alt="product-img" />
+                        <img src={`http://localhost:8000/images/${image}`} alt="product-img" />
                     </Link>
                 </figure>
                 <div className="products_details">

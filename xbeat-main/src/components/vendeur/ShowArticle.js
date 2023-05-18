@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 // import { Switch } from 'antd';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { Spin ,message ,Popconfirm} from 'antd';
+import { Spin, message, Popconfirm } from 'antd';
 import VendeurNav from './VendeurNav';
 export default function ShowArticle() {
   const [test, setTest] = useState()
@@ -20,7 +20,7 @@ export default function ShowArticle() {
   };
 
   const handleModifier = async (id) => {
-    axios.get(`http://localhost:8000/api/disponible/${id}`)
+    axios.put(`http://localhost:8000/api/disponible/${id}`)
       .then((response) => {
         message.success('Les données ont été modifer avec succès.');
         window.location.reload(true)
@@ -30,7 +30,7 @@ export default function ShowArticle() {
       });
   };
 
-
+  let text = ""
 
   const columns = [
     {
@@ -55,21 +55,22 @@ export default function ShowArticle() {
       dataIndex: 'id_article',
       render: (_, record) => (
         <Space size="middle">
+
           <Link to={`/HomeVendeur/UpadateArticle/${record.key}`}>Update</Link>
           <Popconfirm
             title="Êtes-vous sûr de vouloir Modifier ce données?"
-            onConfirm={() =>  handleModifier(record.key)}
+            onConfirm={() => handleModifier(record.key)}
             okText="Oui"
             cancelText="Non"
           >
-            {record.disponibilite ==='true'? (<Button type="link">Disponible</Button>):(<Button type="link">InDisponible</Button>)}
-            
+            {record.disponibilite === "false" ? ( <Button type="link">{"disponible"}</Button> ) : (<Button type="link">{"Indiponible"}</Button>)}
+           
           </Popconfirm>
 
 
           <Popconfirm
             title="Êtes-vous sûr de vouloir supprimer ces données?"
-            onConfirm={() =>  handleDelete(record.key)}
+            onConfirm={() => handleDelete(record.key)}
             okText="Oui"
             cancelText="Non"
           >
@@ -101,6 +102,7 @@ export default function ShowArticle() {
 
   const data = test !== undefined ? (test.map(x => ({
     key: x.id_article,
+    disponibilite:x.disponibilite,
     name_article: x.name_article,
     type: x.type,
 

@@ -72,15 +72,23 @@ class ArticleController extends Controller
     public function getArticleForHome()
     {
         //
-        $article =DB::table('articles')
-        ->leftJoin('images', 'articles.id_article', '=', 'images.id_article')
-        ->select('articles.*', 'images.images', 'images.id')->distinct()->limit(12)
+        $article =DB::table('articles')->distinct()->limit(11)
         ->get();
-        // $article = Article::all();
+
         return response()->json([
             'success' => 'greaat work',
             'data' => $article
         ]);
+    }
+
+
+    public function images($id)
+    {
+        //
+        // $article = Article::where('id_article',$id);
+    $images = DB::table('images')->select('images.id','images.images')->where('id_article',$id)->get();
+
+    return response($images);
     }
 
     /**
@@ -88,24 +96,23 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-
+        $files =$request->file('images');
         $articleId = Article::insertGetId([
             'id_categorie' => $request->id_categorie,
             'id_user' => $request->id_user,
             'name_article' => $request->name_article,
             'description' => $request->description,
+            'image' =>$files[0]->getClientOriginalName(),
+            'localisation' =>"taza",
             'prix' => $request->prix,
             'type' => $request->type,
             'disponibilite' => $request->disponibilite,
-
         ]);
-        foreach ($request->file('images') as $file) {
-            $path = $file->store('images');
-
+        foreach ($files as $file) {
+            $path = $file->move('images/', $file->getClientOriginalName());
             Image::create([
                 'id_article' => $articleId,
                 'images' => $path
-
             ]);
         }
 

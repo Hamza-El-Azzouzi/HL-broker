@@ -39,6 +39,15 @@ const ProductDetails = () => {
         ).catch(error => console.log(error))
     }, [productId, products])
 
+    const [images, setImages] = useState();
+    useEffect(() => {
+        axios.get(`http://localhost:8000/api/articles/${productId}/images`).then(response => {
+            setImages(response.data)
+            console.log(images)
+        }
+        ).catch(error => console.log(error))
+    }, [productId, images])
+
 
 
 

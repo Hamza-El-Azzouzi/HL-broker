@@ -16,8 +16,9 @@ return new class extends Migration
             $table->foreignId('id_categorie')->references('id_categorie')->on('categories')->cascadeOnDelete()->cascadeOnUpdate()->nullable();
             $table->foreignId('id_user')->references('id')->on('users')->cascadeOnDelete()->cascadeOnUpdate();
             $table->string('name_article');
-            $table->string('description');
+            $table->string('description',2000);
             $table->integer('prix');
+            $table->string('image');
             $table->text('localisation');
             $table->string('type');
             $table->string('disponibilite');

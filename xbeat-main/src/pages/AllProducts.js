@@ -15,7 +15,7 @@ const AllProducts = () => {
     const [allProducts, setAllProducts] = useState();
 
     useEffect(() => {
-        axios.get('http://localhost:8000/api/getArticle').then(response => {
+        axios.get('http://localhost:8000/api/article').then(response => {
             setAllProducts(response.data.data)
             console.log(allProducts)
         }
