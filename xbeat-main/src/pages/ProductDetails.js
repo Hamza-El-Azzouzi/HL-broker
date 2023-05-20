@@ -1,7 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { IoMdCheckmark, IoMdClose } from 'react-icons/io';
-import { GrClose } from "react-icons/gr";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination, Navigation } from "swiper";
+
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+import '../styles/partials/components/Slider.css'
+// import { GrClose } from "react-icons/gr";
 // import { calculateDiscount, displayMoney } from '../helpers/utils';
 import useDocTitle from '../hooks/useDocTitle';
 // import useActive from '../hooks/useActive';
@@ -13,13 +21,10 @@ import ProductSummary from '../components/product/ProductSummary';
 import Services from '../components/common/Services';
 import axios from 'axios';
 import { Space, Spin } from 'antd';
+// import ProductCarousel from '../components/sliders/ProductCarousel';
 const ProductDetails = () => {
 
     useDocTitle('Product Details');
-
-    // const { handleActive, activeClass } = useActive(0);
-
-    // const { addItem } = useContext(cartContext);
 
     const { productId } = useParams();
 
@@ -31,60 +36,40 @@ const ProductDetails = () => {
     // showing the Product based on the received 'id'
 
     const [products, setProducts] = useState();
-    useEffect(() => {
+    const [images, setImages] = useState();
+
+    const getArticles = () => {
         axios.get(`http://localhost:8000/api/article/${productId}`).then(response => {
-            setProducts(response.data.data)
+            setProducts(response.data)
             console.log(products)
         }
         ).catch(error => console.log(error))
-    }, [productId, products])
-
-    const [images, setImages] = useState();
-    useEffect(() => {
+    }
+    const getArticleImage = () => {
         axios.get(`http://localhost:8000/api/articles/${productId}/images`).then(response => {
             setImages(response.data)
             console.log(images)
         }
         ).catch(error => console.log(error))
-    }, [productId, images])
+    }
+    useEffect(() => {
 
 
-
-
-    // const { name_article , description , prix ,  type , disponibilite ,images} = products;
-
-    // const [previewImg, setPreviewImg] = useState(images[0]);
-
-
-    // handling Add-to-cart
-    // const handleAddItem = () => {
-    //     addItem(Products);
-    // };
-
-
-    // setting the very-first image on re-render
-    // useEffect(() => {
-    //     setPreviewImg(images);
-    //     handleActive(0);
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [images]);
-
-
-    // handling Preview image
-    // const handlePreviewImg = (i) => {
-    //     setPreviewImg(images);
-    //     handleActive(i);
-    // };
-
+    }, [])
 
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        // Simulate loading time
+        getArticles()
+        getArticleImage()
         setTimeout(() => {
             setIsLoading(false);
         }, 3000);
+
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
 
     return isLoading ? (
         <Space size="large" className='Spinner'>
@@ -98,10 +83,29 @@ const ProductDetails = () => {
                 <div className="wrapper prod_details_wrapper">
 
                     {/*=== Product Details Left-content ===*/}
-                    <div className="prod_details_left_col">
-                        <figure className="prod_details_img">
-                            <img src={products[0].images} alt="product-img" />
-                        </figure>
+                    {/* <div className="prod_details_left_col">
+                     */}
+                    <div className="prod_details_left_col swipper">
+                        {/* <img src={`http://localhost:8000/images/${products[0].image}`} alt="product-img" /> */}
+                        <Swiper
+                            slidesPerView={1}
+                            spaceBetween={30}
+                            loop={true}
+                            pagination={{
+                                clickable: true,
+                            }}
+                            navigation={true}
+                            modules={[Pagination, Navigation]}
+                            className="mySwiper"
+                        >
+                            {images !== undefined ? (
+                                images.map((x) => (
+
+                                    <SwiperSlide key={x.id}><img src={`http://localhost:8000/images/${x.images}`} alt="product-img" /></SwiperSlide>
+
+                                )
+                                )) : (null)}
+                        </Swiper>
                     </div>
 
                     {/*=== Product Details Right-content ===*/}
