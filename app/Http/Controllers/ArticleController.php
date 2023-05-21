@@ -19,7 +19,7 @@ class ArticleController extends Controller
     public function index()
     {
         //
-        $article = Article::all();
+        $article = Article::where();
         // $article = Article::all();
         return response()->json([
             'success' => 'greaat work',
@@ -56,13 +56,10 @@ class ArticleController extends Controller
         //
     }
 
-    public function getArticle()
+    public function getArticle($id)
     {
         //
-        $article =DB::table('articles')
-        ->leftJoin('images', 'articles.id_article', '=', 'images.id_article')
-        ->select('articles.*', 'images.images', 'images.id')->distinct()
-        ->get();
+        $article =DB::select('SELECT * FROM articles WHERE id_user = ?', [$id]);
         // $article = Article::all();
         return response()->json([
             'success' => 'greaat work',

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Input, Button, message, Select, Radio, InputNumber ,Upload} from 'antd';
+import { Form, Input, Button, message, Select, Radio, InputNumber } from 'antd';
 import '../../styles/partials/components/AddForm.css'
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import VendeurNav from './VendeurNav';
-import { DeleteOutlined ,UploadOutlined } from '@ant-design/icons';
+import { DeleteOutlined  } from '@ant-design/icons';
 const { TextArea } = Input;
 
 const AddArticle = () => {
@@ -24,6 +24,8 @@ const AddArticle = () => {
     for (let i = 0; i < Images.length; i++) {
         formData.append('images[]', Images[i]);
     }
+    // const token = sessionStorage.getItem('token');
+    const user =JSON.parse(sessionStorage.getItem('user'));
 
     const onFinish = async (values) => {
         console.log(formData)
@@ -31,7 +33,7 @@ const AddArticle = () => {
         try {
             const data = {
                 'id_categorie': form.getFieldValue('categorie'),
-                'id_user': 1,
+                'id_user': user.id,
                 'images': Images,
                 'prix': form.getFieldValue('prix'),
                 'name_article': form.getFieldValue('name_article'),

@@ -22,7 +22,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/categorie', [App\Http\Controllers\CategorieController::class, 'index']);
 Route::post('/categorie', [App\Http\Controllers\CategorieController::class, 'store']);
 Route::resource('/article', App\Http\Controllers\ArticleController::class);
-Route::get('/getArticle', [App\Http\Controllers\ArticleController::class, 'getArticle']);
+Route::get('/getArticle/{id}', [App\Http\Controllers\ArticleController::class, 'getArticle']);
 Route::get('/getArticleForHome', [App\Http\Controllers\ArticleController::class, 'getArticleForHome']);
 
 Route::put('/disponible/{id}', [App\Http\Controllers\ArticleController::class, 'Disponible']);
@@ -34,13 +34,16 @@ Route::middleware('jwt.auth')->get('/api/protected', function () {
 Route::get('/articles/{id}/images', [App\Http\Controllers\ArticleController::class, 'images']);
 
 
-Route::group([
-    'middleware' => 'api',
-    'prefix' => 'auth'
-], function ($router) {
-    Route::post('/login', [App\Http\Controllers\UserController::class, 'login']);
-    Route::post('/register', [App\Http\Controllers\UserController::class, 'register']);
-    Route::post('/logout', [App\Http\Controllers\UserController::class, 'logout']);
-    Route::post('/refresh', [App\Http\Controllers\UserController::class, 'refresh']);
-    Route::get('/user-profile', [App\Http\Controllers\UserController::class, 'userProfile']);    
-});
+// Route::group([
+//     'middleware' => 'api',
+//     'prefix' => 'auth'
+// ], function ($router) {
+//     Route::post('/login', [App\Http\Controllers\UserController::class, 'login']);
+//     Route::post('/register', [App\Http\Controllers\UserController::class, 'register']);
+//     Route::post('/logout', [App\Http\Controllers\UserController::class, 'logout']);
+//     Route::post('/refresh', [App\Http\Controllers\UserController::class, 'refresh']);
+//     Route::get('/user-profile', [App\Http\Controllers\UserController::class, 'userProfile']);    
+// });
+Route::post('/register', [App\Http\Controllers\UserController::class, 'register']);
+Route::post('/login', [App\Http\Controllers\UserController::class, 'login']);
+Route::post('/logout', [App\Http\Controllers\UserController::class, 'logout']);

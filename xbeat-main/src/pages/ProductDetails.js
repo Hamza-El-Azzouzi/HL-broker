@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { IoMdCheckmark, IoMdClose } from 'react-icons/io';
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination, Navigation } from "swiper";
+import { Pagination, Navigation, Autoplay } from "swiper";
 
 // Import Swiper styles
 import "swiper/css";
@@ -94,8 +94,12 @@ const ProductDetails = () => {
                             pagination={{
                                 clickable: true,
                             }}
-                            navigation={true}
-                            modules={[Pagination, Navigation]}
+                            autoplay={{
+                                delay: 2500,
+                                disableOnInteraction: false,
+                              }}
+                            // navigation={true}
+                            modules={[Autoplay, Pagination]}
                             className="mySwiper"
                         >
                             {images !== undefined ? (

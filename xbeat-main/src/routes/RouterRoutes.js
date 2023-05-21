@@ -15,24 +15,51 @@ import UpadateArticle from '../components/vendeur/UpdateArticle';
 import ShowDemande from '../components/vendeur/ShowDemande';
 // import ErrorPage from './ErrorPage';
 import '../styles/partials/pages/HomeVendeur.css'
+import AuthorizedPage from '../pages/authorized';
+import Demande from '../components/acheteur/Demande';
 const RouterRoutes = () => {
 
     useScrollRestore();
+    const token = sessionStorage.getItem('token');
+    const user = JSON.parse(sessionStorage.getItem('user'));
 
+    const isLoggedIn = !!token && !!user;
     return (
         <>
             <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/cart" element={<Cart />} />
                 <Route path="/all-products" element={<AllProducts />} />
                 <Route path="/product-details/:productId" element={<ProductDetails />} />
+                {isLoggedIn ? (
+                    user.account_type === 'vendeur' ? (
+                        <>
+                            <Route path='/HomeVendeur' element={<Dashboard />} />
+                            <Route path='/HomeVendeur/Article' element={<ShowArticle />} />
+                            <Route path='/HomeVendeur/Demande' element={<ShowDemande />} />
+                            <Route path='/HomeVendeur/AddArticle' element={<AddArticle />} />
+                            <Route path='/HomeVendeur/UpadateArticle/:id' element={<UpadateArticle />} />
+                        </>
+
+                    ) : (
+                        <>
+                            <Route path="/cart" element={<Cart />} />
+                            <Route path='/Demande' element={<Demande/>} />
+                        </>
+                    )
+
+                ) : (<Route path="*" element={<AuthorizedPage />} />)}
+
+
+
+
+
+
+
+
+
+
+
                 <Route path="*" element={<ErrorPage />} />
-        
-                <Route path='/HomeVendeur' element={<Dashboard />} />
-                <Route path='/HomeVendeur/Article' element={<ShowArticle/>} />
-                <Route path='/HomeVendeur/AddArticle' element={<AddArticle/>} />
-                <Route path='/HomeVendeur/UpadateArticle/:id' element={<UpadateArticle/>} />
-                <Route path='/HomeVendeur/Demande' element={<ShowDemande/>} />
             </Routes>
         </>
     );
