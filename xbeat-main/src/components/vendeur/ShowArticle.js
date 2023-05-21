@@ -31,7 +31,8 @@ export default function ShowArticle() {
   };
 
   let text = ""
-
+  const token = sessionStorage.getItem('token');
+  const user =JSON.parse(sessionStorage.getItem('user'));
   const columns = [
     {
       title: 'Id',
@@ -82,7 +83,7 @@ export default function ShowArticle() {
   ];
 
   const FetchData = () => {
-    axios.get('http://localhost:8000/api/article')
+    axios.get(`http://localhost:8000/api/getArticle/${user.id}`)
       .then(response => {
         setTest(response.data.data)
         // console.log()
@@ -94,19 +95,21 @@ export default function ShowArticle() {
 
   useEffect(() => {
     FetchData()
+    console.log(test)
   }, [])
 
 
 
 
 
-  const data = test !== undefined ? (test.map(x => ({
+  const data = test !== undefined ? (
+    test.map(x => ({
     key: x.id_article,
     disponibilite:x.disponibilite,
     name_article: x.name_article,
     type: x.type,
 
-  }))) : null
+  }))) : (null)
 
   if (!data) {
 
