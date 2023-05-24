@@ -35,3 +35,5 @@ Route::get('/articles/{id}/images', [App\Http\Controllers\ArticleController::cla
 
 
 Route::post('/register', [App\Http\Controllers\UserController::class, 'register']);
+Route::post('/profile', [App\Http\Controllers\UserController::class, 'profile']);
+Route::post('/refresh', [App\Http\Controllers\UserController::class, 'refresh']);

@@ -50,4 +50,10 @@ public function register(Request $request){
         'User'=>$user
      ]);
 }
+
+public function profile (){
+    return response()->json(auth()->user());
+}
+
+
 }

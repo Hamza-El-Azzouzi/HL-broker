@@ -13,6 +13,7 @@ import AddArticle from '../components/vendeur/AddArticle';
 import Dashboard from '../components/vendeur/Dashboard';
 import UpadateArticle from '../components/vendeur/UpdateArticle';
 import ShowDemande from '../components/vendeur/ShowDemande';
+import ProfileAcheteur from '../components/profile/profileAcheteur'
 // import ErrorPage from './ErrorPage';
 import '../styles/partials/pages/HomeVendeur.css'
 const RouterRoutes = () => {
@@ -33,6 +34,7 @@ const RouterRoutes = () => {
                 <Route path='/HomeVendeur/AddArticle' element={<AddArticle/>} />
                 <Route path='/HomeVendeur/UpadateArticle/:id' element={<UpadateArticle/>} />
                 <Route path='/HomeVendeur/Demande' element={<ShowDemande/>} />
+                <Route path='/ProfileAcheteur' element={<ProfileAcheteur/>} />
             </Routes>
         </>
     );
