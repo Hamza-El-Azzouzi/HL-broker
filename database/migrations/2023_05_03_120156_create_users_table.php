@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('tel');
             $table->binary('image')->nullable();
             $table->string('password');
+            $table->string('email_isVerified')->default("false");
             $table->rememberToken();
             $table->timestamps();
         });

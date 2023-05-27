@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Link ,useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AiOutlineSearch, AiOutlineShoppingCart, AiOutlineUser } from 'react-icons/ai';
-import { dropdownMenu } from '../../data/headerData';
+// import { dropdownMenu } from '../../data/headerData';
 import commonContext from '../../contexts/common/commonContext';
 import cartContext from '../../contexts/cart/cartContext';
 import AccountForm from '../form/AccountForm';
@@ -14,24 +14,31 @@ const Header = () => {
     const { toggleForm, toggleSearch } = useContext(commonContext);
     const { cartItems } = useContext(cartContext);
     const [isSticky, setIsSticky] = useState(false);
+    const [userData, setUserData] = useState();
 
-    const history =useNavigate()
-    const token = sessionStorage.getItem('token');
-    const user = JSON.parse(sessionStorage.getItem('user'));
-
+    const history = useNavigate()
+    const token = localStorage.getItem('token');
+    const user = JSON.parse(localStorage.getItem('user'));
     const isLoggedIn = !!token && !!user;
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
 
-    const handleLogout =()=>{
+
+
+
+
+    const handleLogout = () => {
         axios.post('http://localhost:8000/api/logout').then(
-            sessionStorage.removeItem('token'),
-            sessionStorage.removeItem('user'),
+            localStorage.removeItem('token'),
+            localStorage.removeItem('user'),
             history('/')
-
         )
     }
 
+
     // handle the sticky-header
     useEffect(() => {
+
         const handleIsSticky = () => window.scrollY >= 50 ? setIsSticky(true) : setIsSticky(false);
 
         window.addEventListener('scroll', handleIsSticky);
@@ -40,10 +47,18 @@ const Header = () => {
             window.removeEventListener('scroll', handleIsSticky);
         };
     }, [isSticky]);
-
+    useEffect(() => {
+        if (isLoggedIn) {
+            axios.get('http://localhost:8000/api/userProfile').then(response => {
+                setUserData(response.data)
+                console.log(userData)
+            }
+            )
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     const cartQuantity = cartItems.length;
-
 
     return (
         <>
@@ -60,9 +75,11 @@ const Header = () => {
                                 </span>
                                 <div className="tooltip">Search</div>
                             </div>
-                                    {isLoggedIn ? (
-                                        user.account_type ==='acheteur' ? (
-                                            <div className="cart_action">
+
+                            {isLoggedIn ? (
+                                userData !== undefined ? (
+                                    userData.account_type === "acheteur" ? (
+                                        <div className="cart_action">
                                             <Link to="/cart">
                                                 <AiOutlineShoppingCart />
                                                 {
@@ -73,10 +90,11 @@ const Header = () => {
                                             </Link>
                                             <div className="tooltip">Cart</div>
                                         </div>
-                                        ):null
-                                        
-                                    ):(null)}
-                           
+                                    ) : (null)
+                                ) : (null)
+                            ) : (null)}
+
+
 
                             <div className="user_action">
                                 <span>
@@ -84,10 +102,15 @@ const Header = () => {
                                 </span>
                                 <div className="dropdown_menu">
                                     {isLoggedIn ? (
-                                        <>
-                                            <h4>Hello! {user.name}</h4>
-                                            <p>Access account and manage orders</p>
-                                        </>
+                                        userData !== undefined ? (
+                                            <>
+                                                <h4>Hello! {userData.name}</h4>
+                                                <p>Access account and manage orders</p>
+                                            </>
+                                        ) : (
+                                            null
+                                        )
+
 
                                     ) : (
                                         <>
@@ -103,24 +126,24 @@ const Header = () => {
                                     )}
                                     <div className="separator"></div>
                                     {isLoggedIn ? (
-                                        <ul>
-
-                                            {user.account_type === 'acheteur' ? (
+                                        userData !== undefined ? (
+                                            <ul>
+                                                {userData.account_type === 'acheteur' ? (
+                                                    <li>
+                                                        <Link to='/Demande'>Demande</Link>
+                                                    </li>
+                                                ) : (
+                                                    <li>
+                                                        <Link to='/HomeVendeur'>Dashboard</Link>
+                                                    </li>
+                                                )}
                                                 <li>
-                                                    <Link to='/Demande'>Demande</Link>
+                                                    {/* <button type='link' onClick={handleLogout}>Logout</button> */}
+                                                    <Link to='/' onClick={handleLogout}>Logout</Link>
                                                 </li>
-                                            ) : (
-                                                <li>
-                                                    <Link to='/HomeVendeur'>Dashboard</Link>
-                                                </li>
-                                            )}
-
-                                            <li>
-                                                {/* <button type='link' onClick={handleLogout}>Logout</button> */}
-                                                <Link to='/' onClick={handleLogout}>Logout</Link>
-                                            </li>
-                                        </ul>) : (null)}
-
+                                            </ul>
+                                        ) : (null)
+                                    ) : (null)}
                                 </div>
                             </div>
                         </nav>

@@ -5,6 +5,7 @@ import useScrollDisable from '../../hooks/useScrollDisable';
 import "../../styles/partials/pages/AccountForm.css";
 import axios from 'axios';
 import { message } from 'antd';
+// import VerificationCodeInput from './verificationCode';
 const AccountForm = () => {
 
     const { isFormOpen, toggleForm } = useContext(commonContext);
@@ -26,8 +27,7 @@ const AccountForm = () => {
 
     const handlIncsriptionSubmit = (e) => {
         e.preventDefault();
-        axios
-            .post("http://localhost:8000/api/register", {
+        axios.post("http://localhost:8000/api/register", {
                 name: name.current.value,
                 email: email.current.value,
                 password: password.current.value,
@@ -35,22 +35,12 @@ const AccountForm = () => {
                 type: type.current.value
             })
             .then((res) => {
-                if (res.status === 200) {
-                    axios.post('http://localhost:8000/api/login', {
-                        email: email.current.value,
-                        password: password.current.value
-                    }).then(response => {
-                        console.log(response)
-                        sessionStorage.setItem('token', response.data.token)
-                        sessionStorage.setItem('user', JSON.stringify(response.data.user))
-                        history('/')
-                        toggleForm(false)
-                    }
-                    ).catch(error => {
-                        message.error(error)
-                    })
-                }
+                console.log(res.data)
+                localStorage.setItem('token',  res.data.token)
+                localStorage.setItem('user', JSON.stringify(res.data.user.id))
+                history('/')
                 toggleForm(false)
+                message.info(res.data.message)
             })
             .catch((error) => {
                 message.error(error.response.data.name[0]);
@@ -58,6 +48,7 @@ const AccountForm = () => {
                 message.error(error.response.data.tel[0]);
                 message.error(error.response.data.password[0]);
             });
+
     };
 
     const handelLoginSubmit = (e) => {
@@ -68,15 +59,19 @@ const AccountForm = () => {
 
         }).then(response => {
             console.log(response)
-            sessionStorage.setItem('token', response.data.token)
-            sessionStorage.setItem('user', JSON.stringify(response.data.user))
-            history('/')
+             history('/verificationCode')
+            //  document.cookie(response.data.token)
+            localStorage.setItem('token', response.data.token)
+            localStorage.setItem('user', JSON.stringify(response.data.user.id))
             toggleForm(false)
         }
         ).catch(error => {
             console.log(error)
             message.error(error.response.data.error)
         })
+        // const user = JSON.parse(sessionStorage.getItem('user'));
+
+        // const isLoggedIn = !!token && !!user;
     }
     return (
         <>
@@ -240,9 +235,9 @@ const AccountForm = () => {
                                 </form>
                             )}
                             <div>
-                                <button className="btn login_btn">
+                                {/* <button className="btn login_btn">
                                     {isSignupVisible ? 'Signup' : 'Login'}
-                                </button>
+                                </button> */}
                             </div>
                         </div>
                     </div>
