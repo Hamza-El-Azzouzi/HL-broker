@@ -1,4 +1,6 @@
 import React, { useContext, useRef, useState } from 'react';
+
+import ls from 'localstorage-slim';
 import { useNavigate } from 'react-router-dom';
 import commonContext from '../../contexts/common/commonContext';
 import useScrollDisable from '../../hooks/useScrollDisable';
@@ -13,7 +15,7 @@ const AccountForm = () => {
     const password = useRef();
     const name = useRef();
     const tel = useRef();
-    const type = useRef(null);
+    const [type , setType]= useState();
     let history = useNavigate()
 
     useScrollDisable(isFormOpen);
@@ -32,12 +34,13 @@ const AccountForm = () => {
                 email: email.current.value,
                 password: password.current.value,
                 tel: tel.current.value,
-                type: type.current.value
+                type: type,
+            
             })
             .then((res) => {
                 console.log(res.data)
-                localStorage.setItem('token',  res.data.token)
-                localStorage.setItem('user', JSON.stringify(res.data.user.id))
+                ls.set('token',  res.data.token, { encrypt: true })
+                ls.set('user', JSON.stringify(res.data.user), { encrypt: true })
                 history('/')
                 toggleForm(false)
                 message.info(res.data.message)
@@ -59,11 +62,10 @@ const AccountForm = () => {
 
         }).then(response => {
             console.log(response)
-             history('/verificationCode')
-            //  document.cookie(response.data.token)
-            localStorage.setItem('token', response.data.token)
-            localStorage.setItem('user', JSON.stringify(response.data.user.id))
+            ls.set('token', response.data.token ,{encrypt:true})
+            ls.set('user', JSON.stringify(response.data.user),{encrypt:true})
             toggleForm(false)
+            history('/verificationCode')
         }
         ).catch(error => {
             console.log(error)
@@ -162,7 +164,7 @@ const AccountForm = () => {
                                                 type="radio"
                                                 name="type"
                                                 value="vendeur"
-                                                ref={type}
+                                                onClick={e=>{setType(e.target.value)}}
                                                 required
                                             />
 
@@ -174,7 +176,7 @@ const AccountForm = () => {
                                                 type="radio"
                                                 name="type"
                                                 value="acheteur"
-                                                ref={type}
+                                                onClick={e=>{setType(e.target.value)}}
                                                 required
                                             />
                                         </div>
@@ -234,11 +236,6 @@ const AccountForm = () => {
                                     </div>
                                 </form>
                             )}
-                            <div>
-                                {/* <button className="btn login_btn">
-                                    {isSignupVisible ? 'Signup' : 'Login'}
-                                </button> */}
-                            </div>
                         </div>
                     </div>
                 )

@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import axios from 'axios';
+import ls from 'localstorage-slim';
 import { useNavigate } from 'react-router-dom';
 import HeroSlider from '../components/sliders/HeroSlider';
 import FeaturedSlider from '../components/sliders/FeaturedSlider';
@@ -9,8 +10,8 @@ import Services from '../components/common/Services';
 
 
 const Home = () => {
-    const user = JSON.parse(localStorage.getItem('user'));
-    const token = localStorage.getItem('token');
+    const user = JSON.parse(ls.get('user',{decrypt:true}));
+    const token = ls.get('token',{decrypt:true});
     const isLoggedIn = !!token && !!user;
 
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -18,15 +19,15 @@ const Home = () => {
 
     useEffect(() => {
         if(isLoggedIn){
-            axios.put(`http://localhost:8000/api/EmailVerify/${user}`).then(
+                axios.put(`http://localhost:8000/api/EmailVerify/${user.id}`).then(
                 response => {
                     console.log(response)
                     history('/')
                 }
             ).catch(error=>{
                 console.log(error)
-                console.log(token)
             })
+            
         }
        
     // eslint-disable-next-line react-hooks/exhaustive-deps

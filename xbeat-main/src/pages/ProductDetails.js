@@ -1,61 +1,50 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { IoMdCheckmark, IoMdClose } from 'react-icons/io';
+import { IoMdCheckmark, IoMdClose, IoIosWarning } from 'react-icons/io';
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination, Navigation, Autoplay } from "swiper";
-
-// Import Swiper styles
+import { Pagination, Autoplay } from "swiper";
+import { Button } from 'antd';
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import '../styles/partials/components/Slider.css'
-// import { GrClose } from "react-icons/gr";
-// import { calculateDiscount, displayMoney } from '../helpers/utils';
+import '../styles/partials/components/Slider.css';
+import '../styles/partials/pages/ProductDetails.css';
+
 import useDocTitle from '../hooks/useDocTitle';
-// import useActive from '../hooks/useActive';
-// import cartContext from '../contexts/cart/cartContext';
-// import productsData from '../data/productsData';
-// import SectionsHead from '../components/common/SectionsHead';
-// import RelatedSlider from '../components/sliders/RelatedSlider';
 import ProductSummary from '../components/product/ProductSummary';
 import Services from '../components/common/Services';
 import axios from 'axios';
 import { Space, Spin } from 'antd';
-// import ProductCarousel from '../components/sliders/ProductCarousel';
+import ls from 'localstorage-slim';
 const ProductDetails = () => {
 
     useDocTitle('Product Details');
 
     const { productId } = useParams();
 
-    // here the 'id' received has 'string-type', so converting it to a 'Number'
-    // const prodId = parseInt(productId);
-
-
-
-    // showing the Product based on the received 'id'
-
     const [products, setProducts] = useState();
     const [images, setImages] = useState();
-
-    const getArticles = () => {
-        axios.get(`http://localhost:8000/api/article/${productId}`).then(response => {
+    const token = ls.get('token', { decrypt: true });
+    const user = JSON.parse(ls.get('user', { decrypt: true }));
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    const getArticles = async () => {
+        await axios.get(`http://localhost:8000/api/article/${productId}`).then(response => {
             setProducts(response.data)
             console.log(products)
         }
         ).catch(error => console.log(error))
     }
-    const getArticleImage = () => {
-        axios.get(`http://localhost:8000/api/articles/${productId}/images`).then(response => {
+    const getArticleImage = async () => {
+        await axios.get(`http://localhost:8000/api/articles/${productId}/images`).then(response => {
             setImages(response.data)
             console.log(images)
         }
         ).catch(error => console.log(error))
     }
-    useEffect(() => {
+    // useEffect(() => {
 
 
-    }, [])
+    // }, [])
 
     const [isLoading, setIsLoading] = useState(true);
 
@@ -86,7 +75,6 @@ const ProductDetails = () => {
                     {/* <div className="prod_details_left_col">
                      */}
                     <div className="prod_details_left_col swipper">
-                        {/* <img src={`http://localhost:8000/images/${products[0].image}`} alt="product-img" /> */}
                         <Swiper
                             slidesPerView={1}
                             spaceBetween={30}
@@ -97,8 +85,7 @@ const ProductDetails = () => {
                             autoplay={{
                                 delay: 2500,
                                 disableOnInteraction: false,
-                              }}
-                            // navigation={true}
+                            }}
                             modules={[Autoplay, Pagination]}
                             className="mySwiper"
                         >
@@ -106,7 +93,6 @@ const ProductDetails = () => {
                                 images.map((x) => (
 
                                     <SwiperSlide key={x.id}><img src={`http://localhost:8000/images/${x.images}`} alt="product-img" /></SwiperSlide>
-
                                 )
                                 )) : (null)}
                         </Swiper>
@@ -153,11 +139,15 @@ const ProductDetails = () => {
                         <div className="separator"></div>
 
                         <div className="prod_details_offers">
-                            <h4>Offers and Discounts</h4>
-                            <ul>
-                                <li>No Cost EMI on Credit Card</li>
-                                <li>Pay Later & Avail Cashback</li>
-                            </ul>
+                            <img src={`http://localhost:8000/avatar/${user.image}`} alt="Avatar" className="avatar" />
+                            <div className='user-info'>
+
+                                <h2 className='prod_details_title'> {user.name}</h2>
+                                <p>{user.email}</p>
+                            </div>
+                            <div className='report-btn badge'>
+                                <button className='btn-report'><IoIosWarning /></button>
+                            </div>
                         </div>
 
                         <div className="separator"></div>
@@ -170,7 +160,15 @@ const ProductDetails = () => {
                             >
                                 Add to cart
                             </button>
+                            <button
+                                type="button"
+                                className="favorie btn outline"
+                            // onClick={handleAddItem}
+                            >
+                                Ajouter Aux Favorie
+                            </button>
                         </div>
+
 
                     </div>
                 </div>
@@ -178,12 +176,7 @@ const ProductDetails = () => {
         </section>
 
         <ProductSummary description={products[0].description} />
-
         <section id="related_products" className="section">
-            {/* <div className="container">
-                    <SectionsHead heading="Related Products" />
-                    <RelatedSlider category={category} />
-                </div> */}
         </section>
         <Services />
     </>)

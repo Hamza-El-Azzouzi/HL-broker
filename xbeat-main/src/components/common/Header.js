@@ -8,17 +8,17 @@ import AccountForm from '../form/AccountForm';
 import SearchBar from './SearchBar';
 import axios from 'axios';
 
-
+import ls from 'localstorage-slim';
 const Header = () => {
 
     const { toggleForm, toggleSearch } = useContext(commonContext);
     const { cartItems } = useContext(cartContext);
     const [isSticky, setIsSticky] = useState(false);
-    const [userData, setUserData] = useState();
+    // const [userData, setUserData] = useState();
 
     const history = useNavigate()
-    const token = localStorage.getItem('token');
-    const user = JSON.parse(localStorage.getItem('user'));
+    const token = ls.get('token',{decrypt:true});
+    const user = JSON.parse(ls.get('user',{decrypt:true}));
     const isLoggedIn = !!token && !!user;
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -29,8 +29,8 @@ const Header = () => {
 
     const handleLogout = () => {
         axios.post('http://localhost:8000/api/logout').then(
-            localStorage.removeItem('token'),
-            localStorage.removeItem('user'),
+            ls.remove('token'),
+            ls.remove('user'),
             history('/')
         )
     }
@@ -47,16 +47,7 @@ const Header = () => {
             window.removeEventListener('scroll', handleIsSticky);
         };
     }, [isSticky]);
-    useEffect(() => {
-        if (isLoggedIn) {
-            axios.get('http://localhost:8000/api/userProfile').then(response => {
-                setUserData(response.data)
-                console.log(userData)
-            }
-            )
-        }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+
 
     const cartQuantity = cartItems.length;
 
@@ -77,8 +68,8 @@ const Header = () => {
                             </div>
 
                             {isLoggedIn ? (
-                                userData !== undefined ? (
-                                    userData.account_type === "acheteur" ? (
+                               
+                                    user.account_type === "acheteur" ? (
                                         <div className="cart_action">
                                             <Link to="/cart">
                                                 <AiOutlineShoppingCart />
@@ -91,7 +82,6 @@ const Header = () => {
                                             <div className="tooltip">Cart</div>
                                         </div>
                                     ) : (null)
-                                ) : (null)
                             ) : (null)}
 
 
@@ -102,17 +92,13 @@ const Header = () => {
                                 </span>
                                 <div className="dropdown_menu">
                                     {isLoggedIn ? (
-                                        userData !== undefined ? (
+                                        
                                             <>
-                                                <h4>Hello! {userData.name}</h4>
+                                                <h4>Hello! {user.name}</h4>
                                                 <p>Access account and manage orders</p>
                                             </>
+                                       
                                         ) : (
-                                            null
-                                        )
-
-
-                                    ) : (
                                         <>
                                             <h4>Hello!</h4>
                                             <p>Access account and manage orders</p>
@@ -126,9 +112,9 @@ const Header = () => {
                                     )}
                                     <div className="separator"></div>
                                     {isLoggedIn ? (
-                                        userData !== undefined ? (
+                                       
                                             <ul>
-                                                {userData.account_type === 'acheteur' ? (
+                                                {user.account_type === 'acheteur' ? (
                                                     <li>
                                                         <Link to='/Demande'>Demande</Link>
                                                     </li>
@@ -142,7 +128,6 @@ const Header = () => {
                                                     <Link to='/' onClick={handleLogout}>Logout</Link>
                                                 </li>
                                             </ul>
-                                        ) : (null)
                                     ) : (null)}
                                 </div>
                             </div>

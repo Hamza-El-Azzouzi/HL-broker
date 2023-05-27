@@ -1,4 +1,4 @@
-
+import ls from 'localstorage-slim';
 import React, { useRef , useEffect ,useState} from 'react';
 import { message } from 'antd'
 import '../../styles/partials/components/OTP.css'
@@ -32,9 +32,9 @@ const VerificationCodeInput = () => {
         //   }
     }
     let code = '';
-    const user = JSON.parse(localStorage.getItem('user'));
-    const token = localStorage.getItem('token');
-    const [userData, setUserData] = useState();
+    const user = JSON.parse(ls.get('user',{decrypt:true}));
+    const token = ls.get('token',{decrypt:true});
+    // const [userData, setUserData] = useState();
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     const handleVerification = () => {
         for (let i = 0; i < 6; i++) {
@@ -52,29 +52,7 @@ const VerificationCodeInput = () => {
         })
     }
 
-    const isLoggedIn = !!token && !!user;
-    useEffect(() => {
-        if (isLoggedIn) {
-            axios.get('http://localhost:8000/api/userProfile').then(response => {
-                setUserData(response.data.email)
-                console.log(userData)
-                
-            }
-           
-            )
-        }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
-   
-      
- 
-   
-
-  
-      
-
-   
-
+    // const isLoggedIn = !!token && !!user;
 
     return (
         <main>
@@ -82,19 +60,11 @@ const VerificationCodeInput = () => {
                 <div className='container'>
                     <div className='wrapper '>
                         <div className='OTP'>
-                            { userData !==undefined ? (
+                            
                                 <>
-                                <p>OTP sent on {userData.substring(0, 2) + '...' + userData.substring(userData.indexOf('@'))}</p>
+                                <p>OTP sent on {user.email.substring(0, 2) + '...' + user.email.substring(user.email.indexOf('@'))}</p>
                                  <h1>Enter OTP</h1> 
-                                </>
-                                 
-                            ):(
-                                <>
-                                <p>OTP sent on </p>
-                                 <h1>Enter OTP</h1> 
-                                </>
-                            )}
-                           
+                                </>                      
                             <div className="otp-field">
                                 {[0, 1, 2, 3, 4, 5].map((index) => (
                                     <input

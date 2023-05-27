@@ -47,9 +47,9 @@ class UserController extends Controller
             'password' => Hash::make($request->password),
             'tel' => $request->tel,
             'account_type' => $request->type,
-            'image' => null
+            'image'=>'img_avatar.png'
         ]);
-
+        
         // $verificationUrl = 'http://localhost:8000/api/EmailVerify/'.$user->id;
         Mail::to($request->email)->send(new verficationEmail($user->id));
         $token = JWTAuth::fromUser($user);

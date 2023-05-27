@@ -2,7 +2,7 @@ import React , {useEffect ,useState}from 'react';
 import { Routes, Route } from 'react-router';
 import axios from 'axios';
 import useScrollRestore from '../hooks/useScrollRestore';
-
+import ls from 'localstorage-slim';
 import AllProducts from '../pages/AllProducts';
 import Cart from '../pages/Cart';
 import Home from '../pages/Home';
@@ -24,20 +24,13 @@ import EmailVerify from '../components/form/EmailVerify';
 const RouterRoutes = () => {
     // const history =useNavigate()
     useScrollRestore();
-    const token = localStorage.getItem('token');
-    const user = JSON.parse(localStorage.getItem('user'));
-    const [userData, setUserData] = useState();
+    const token = ls.get('token',{decrypt:true});
+    const user = JSON.parse(ls.get('user',{decrypt:true}));
+    // const [userData, setUserData] = useState();
     const isLoggedIn = !!token && !!user;
-    useEffect(() => {
-        if (isLoggedIn) {
-            axios.get('http://localhost:8000/api/userProfile').then(response => {
-                setUserData(response.data)
-                console.log(userData)
-            }
-            )
-        }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+
+        
+
     // const isVerified = !!verifier;
     return (
         <>
@@ -46,10 +39,9 @@ const RouterRoutes = () => {
                 <Route path="/all-products" element={<AllProducts />} />
                 <Route path="/product-details/:productId" element={<ProductDetails />} />
                 <Route path='/EmailVerify' element={<EmailVerify />} />
-                
                 {isLoggedIn ? (
-                    userData !== undefined ?(
-                        userData.account_type === 'vendeur' ? (
+
+                        user.account_type === 'vendeur' ? (
                             <>
                                 <Route path='/HomeVendeur' element={<Dashboard />} />
                                 <Route path='/HomeVendeur/Article' element={<ShowArticle />} />
@@ -64,11 +56,7 @@ const RouterRoutes = () => {
                                 <Route path='/Demande' element={<Demande />} />
                                 <Route path='/verificationCode' element={<VerificationCodeInput />} />
                             </>
-                        )
-                    )
-                    
-                    :(null)
-                          
+                        )  
                     ) : (
                         <Route path="*" element={<AuthorizedPage />} />
                     )

@@ -3,27 +3,23 @@ import { IoMdStar } from 'react-icons/io';
 
 const ProductReviews = (props) => {
 
-    const { name, date, review, rateCount } = props;
-
     return (
         <>
             <li>
                 <div className="user_info">
-                    <img src="https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png" alt="user-img" />
+                    <img src={props.src} alt="user-img" />
                     <div>
-                        <h4>{name}</h4>
+                        <h4>{props.username}</h4>
                         <div className="user_ratings">
                             <span className="rating_star">
-                                {
-                                    [...Array(rateCount)].map((_, i) => <IoMdStar key={i} />)
-                                }
+                               {props.nbrstart}
                             </span>
                             <span>|</span>
-                            <span className="date">{date}</span>
+                            <span className="date">{props.date}</span>
                         </div>
                     </div>
                 </div>
-                <p className="user_review">{review}</p>
+                <p className="user_review">{props.review}</p>
             </li>
         </>
     );
