@@ -32,6 +32,7 @@ Route::middleware('jwt.auth')->get('/api/protected', function () {
 });
 
 Route::get('/articles/{id}/images', [App\Http\Controllers\ArticleController::class, 'images']);
+Route::get('/articles/{id}/user', [App\Http\Controllers\ArticleController::class, 'User']);
 Route::post('/sendVerificationCode', [App\Http\Controllers\UserController::class, 'sendVerificationCode']);
 // Route::post('/verifyCode', [App\Http\Controllers\UserController::class, 'sendVerificationCode']);
 Route::post('/verifyCode', [App\Http\Controllers\UserController::class, 'verifyCode']);

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use App\Models\Image;
+use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -86,6 +87,15 @@ class ArticleController extends Controller
     $images = DB::table('images')->select('images.id','images.images')->where('id_article',$id)->get();
 
     return response($images);
+    }
+    public function user($id)
+    {
+
+    $user = User::join('articles','users.id','=','articles.id_user')->where('articles.id_article',$id)->get([
+        'users.name','users.email','users.image','users.id'
+    ]);
+
+    return response($user);
     }
 
     /**

@@ -15,8 +15,7 @@
 }
 .report-btn{
     display: inline-block;
-    margin-left: 250px;
-
+    margin-left: 200px;
 }
 .btn-report{
     color: red;
@@ -28,7 +27,11 @@
 }
 .favorie{
     margin-left: 10px;
-    color: none;
+    padding-top: 0.8rem;
+    padding-right: 1.5rem;
+    padding-bottom: 0.8rem;
+    padding-left: 1.5rem;
+    border-radius: 3px;
 }
 .outline {
     border: 2px solid rgb(255, 0, 0);
@@ -41,4 +44,17 @@
     margin-top: 5%;
     font-size: large;
     resize: none;
+  }
+  .publish-btn{
+    display: block;
+    margin-left: 10%;
+    margin-top: 1%;
+    background-color: red;
+    width: 100px;
+    padding-top: 0.8rem;
+    padding-right: 1.5rem;
+    padding-bottom: 0.8rem;
+    padding-left: 1.5rem;
+    border-radius: 3px;
+
   }

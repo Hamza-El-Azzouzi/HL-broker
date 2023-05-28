@@ -7,7 +7,7 @@ const ProductSummary = (props) => {
 
 
 
-    const { active, handleActive, activeClass } = useActive('specs');
+    const { active, handleActive, activeClass } = useActive('overview');
 
 
     return (
@@ -51,7 +51,8 @@ const ProductSummary = (props) => {
                                     <ul>
                                        {/* map sur data l ghadi tji mn database */}
                                     </ul>
-                                    <textarea wrap='true' rows="10" cols="33" className='outline textarea'></textarea>
+                                   <textarea wrap='true' rows="10" cols="33"  className='outline textarea'></textarea>
+                                   <button className='publish-btn'>Publier</button>
                                 </div>
                             )
 
