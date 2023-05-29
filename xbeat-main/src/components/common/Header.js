@@ -14,18 +14,16 @@ const Header = () => {
     const { toggleForm, toggleSearch } = useContext(commonContext);
     const { cartItems } = useContext(cartContext);
     const [isSticky, setIsSticky] = useState(false);
-    // const [userData, setUserData] = useState();
 
     const history = useNavigate()
     const token = ls.get('token',{decrypt:true});
     const user = JSON.parse(ls.get('user',{decrypt:true}));
     const isLoggedIn = !!token && !!user;
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
 
 
 
-
+ 
 
     const handleLogout = () => {
         axios.post('http://localhost:8000/api/logout').then(
@@ -38,7 +36,7 @@ const Header = () => {
 
     // handle the sticky-header
     useEffect(() => {
-
+        
         const handleIsSticky = () => window.scrollY >= 50 ? setIsSticky(true) : setIsSticky(false);
 
         window.addEventListener('scroll', handleIsSticky);
@@ -69,7 +67,7 @@ const Header = () => {
 
                             {isLoggedIn ? (
                                
-                                    user.account_type === "acheteur" ? (
+                               user.account_type === "acheteur" ? (
                                         <div className="cart_action">
                                             <Link to="/cart">
                                                 <AiOutlineShoppingCart />

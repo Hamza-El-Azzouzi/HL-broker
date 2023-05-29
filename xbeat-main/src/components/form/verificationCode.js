@@ -51,9 +51,6 @@ const VerificationCodeInput = () => {
             message.error(error.error)
         })
     }
-
-    // const isLoggedIn = !!token && !!user;
-
     return (
         <main>
             <section className="section">

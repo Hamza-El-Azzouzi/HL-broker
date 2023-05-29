@@ -19,7 +19,7 @@ const Home = () => {
 
     useEffect(() => {
         if(isLoggedIn){
-                axios.put(`http://localhost:8000/api/EmailVerify/${user.id}`).then(
+                axios.put(`http://localhost:8000/api/EmailVerify/${user}`).then(
                 response => {
                     console.log(response)
                     history('/')

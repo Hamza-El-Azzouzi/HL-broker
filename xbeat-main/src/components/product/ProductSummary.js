@@ -1,14 +1,14 @@
 import React from 'react';
 
 import useActive from '../../hooks/useActive';
-
+import ls from 'localstorage-slim';
 
 const ProductSummary = (props) => {
 
 
 
     const { active, handleActive, activeClass } = useActive('overview');
-
+    const Loginuser = JSON.parse(ls.get('user', { decrypt: true }));
 
     return (
         <>
@@ -42,17 +42,24 @@ const ProductSummary = (props) => {
                     {/*===== Product-Summary-Details =====*/}
                     <div className="prod_summary_details">
                         {
-                             active === 'overview' ? (
+                            active === 'overview' ? (
                                 <div className="prod_overview">
                                     {props.description}
                                 </div>
                             ) : (
                                 <div className="prod_reviews">
                                     <ul>
-                                       {/* map sur data l ghadi tji mn database */}
+                                        {/* map sur data l ghadi tji mn database */}
                                     </ul>
-                                   <textarea wrap='true' rows="10" cols="33"  className='outline textarea'></textarea>
-                                   <button className='publish-btn'>Publier</button>
+                                    {Loginuser ? (
+                                        Loginuser.account_type === 'acheteur' ? (
+                                            <>
+                                                <textarea wrap='true' rows="10" cols="33" className='outline textarea'></textarea>
+                                                <button className='publish-btn'>Publier</button>
+                                            </>
+                                        ) : (null)
+                                    ):(null)}
+
                                 </div>
                             )
 

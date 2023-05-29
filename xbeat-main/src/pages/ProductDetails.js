@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { IoMdCheckmark, IoMdClose, IoIosWarning } from 'react-icons/io';
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Autoplay } from "swiper";
-// import { Button } from 'antd';
+import {  message } from 'antd';
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
@@ -26,13 +26,11 @@ const ProductDetails = () => {
     const [images, setImages] = useState();
     const [user, setUser] = useState();
     const token = ls.get('token', { decrypt: true });
-    // const user = JSON.parse(ls.get('user', { decrypt: true }));
+    const Loginuser = JSON.parse(ls.get('user', { decrypt: true }));
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     const getArticles = async () => {
         await axios.get(`http://localhost:8000/api/article/${productId}`).then(response => {
             setProducts(response.data)
-
-
             console.log(products)
         }
         ).catch(error => console.log(error))
@@ -51,10 +49,16 @@ const ProductDetails = () => {
         }
         ).catch(error => console.log(error))
     }
-    // useEffect(() => {
-
-
-    // }, [])
+    const handleCart = () => {
+        axios.post('http://localhost:8000/api/panier', {
+            id_user: Loginuser.id,
+            id_article: productId
+        }).then(response => {
+            message.success(response.data.message)
+        }).catch(error => {
+            message.error(error.message)
+        })
+    }
 
     const [isLoading, setIsLoading] = useState(true);
 
@@ -64,14 +68,11 @@ const ProductDetails = () => {
         getUserArticle()
         setTimeout(() => {
             setIsLoading(false);
-        }, 3000);
-
-
+        }, 5000);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-
-    return isLoading ? (
+    return isLoading  ? (
         <Space size="large" className='Spinner'>
             <Spin tip="Loading..." size="large">
                 <div className="content" />
@@ -102,7 +103,6 @@ const ProductDetails = () => {
                         >
                             {images !== undefined ? (
                                 images.map((x) => (
-
                                     <SwiperSlide key={x.id}><img src={`http://localhost:8000/images/${x.images}`} alt="product-img" /></SwiperSlide>
                                 )
                                 )) : (null)}
@@ -126,12 +126,15 @@ const ProductDetails = () => {
 
                         <div className="prod_details_price">
                             <div className="price_box">
-                                <h3> Type de Bien : {products[0].type} </h3>
+                                <h3> Type de Bien : {products[0].type}</h3>
                                 <h3 className="price">
                                     {products[0].type === "Vendre" ? ("Prix : " + products[0].prix + " DH") :
                                         ("Prix Par Jour :" + products[0].prix + "DH")}
-                                </h3>
 
+                                    {/* <small className="del_price"><del>{oldPrice}</del></small> */}
+                                </h3>
+                                {/* <p className="saved_price">You save: {savedPrice} ({savedDiscount}%)</p> */}
+                                {/* <span className="tax_txt">(Inclusive of all taxes)</span> */}
                             </div>
                             {products[0].disponibilite === 'true' ?
                                 (
@@ -163,20 +166,32 @@ const ProductDetails = () => {
                         <div className="separator"></div>
 
                         <div className="prod_details_buy_btn">
-                            <button
-                                type="button"
-                                className="btn"
-                            // onClick={handleAddItem}
-                            >
-                                Add to cart
-                            </button>
-                            <button
-                                type="button"
-                                className="favorie outline"
-                            // onClick={handleAddItem}
-                            >
-                                Ajouter Aux Favorie
-                            </button>
+                           
+                            {   Loginuser ? (
+                                Loginuser.account_type === 'acheteur' ? (
+                                    <> <button
+                                    type="button"
+                                    className="btn"
+                                // onClick={handleAddItem}
+                                >
+                                    Demande
+                                </button>
+                                    <button
+                                    type="button"
+                                    className="favorie outline"
+                                    onClick={handleCart}
+                                >
+                                    Ajouter Aux Favorie
+                                </button>
+                                    </>
+                                    
+                                ):
+                                
+                                (null)
+                            ):(null)
+                            
+                            }
+                            
                         </div>
 
 

@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('article__paniers', function (Blueprint $table) {
+        Schema::create('article_panier', function (Blueprint $table) {
+            $table->bigIncrements('id');
             $table->foreignId('id_panier')->references('id_panier')->on('paniers')->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId('id_article')->references('id_article')->on('articles')->cascadeOnDelete()->cascadeOnUpdate();
-            $table->primary(['id_panier','id_article']);
+            // $table->primary(['id_panier','id_article']);
             $table->timestamps();
         });
     }
@@ -24,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('article__paniers');
+        Schema::dropIfExists('article_paniers');
     }
 };

@@ -40,7 +40,7 @@ const AccountForm = () => {
             .then((res) => {
                 console.log(res.data)
                 ls.set('token',  res.data.token, { encrypt: true })
-                ls.set('user', JSON.stringify(res.data.user.id), { encrypt: true })
+                ls.set('user', JSON.stringify(res.data.user), { encrypt: true })
                 history('/')
                 toggleForm(false)
                 message.info(res.data.message)
