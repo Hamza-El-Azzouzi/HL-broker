@@ -27,7 +27,7 @@ const AccountForm = () => {
     const handlIncsriptionSubmit = (e) => {
         e.preventDefault();
         axios
-            .post("http://localhost:8000/api/register", {
+        .post("http://localhost:8000/api/register", {
                 name: name.current.value,
                 email: email.current.value,
                 password: password.current.value,

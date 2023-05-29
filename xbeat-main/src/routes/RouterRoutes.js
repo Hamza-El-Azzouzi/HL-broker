@@ -6,7 +6,7 @@ import Cart from '../pages/Cart';
 import Home from '../pages/Home';
 import ProductDetails from '../pages/ProductDetails';
 import ErrorPage from '../pages/ErrorPage';
-
+import ProfileUser from '../pages/ProfileUser';
 import HomeVendeur from '../pages/HomeVendeur';
 import ShowArticle from "../components/vendeur/ShowArticle";
 import AddArticle from '../components/vendeur/AddArticle';
@@ -38,12 +38,15 @@ const RouterRoutes = () => {
                             <Route path='/HomeVendeur/Demande' element={<ShowDemande />} />
                             <Route path='/HomeVendeur/AddArticle' element={<AddArticle />} />
                             <Route path='/HomeVendeur/UpadateArticle/:id' element={<UpadateArticle />} />
+                            <Route path='/Profile' element={<ProfileUser/>} />                       
                         </>
 
                     ) : (
                         <>
                             <Route path="/cart" element={<Cart />} />
                             <Route path='/Demande' element={<Demande/>} />
+                            <Route path='/Profile' element={<ProfileUser/>} />
+                            
                         </>
                     )
 

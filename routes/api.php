@@ -47,3 +47,6 @@ Route::get('/articles/{id}/images', [App\Http\Controllers\ArticleController::cla
 Route::post('/register', [App\Http\Controllers\UserController::class, 'register']);
 Route::post('/login', [App\Http\Controllers\UserController::class, 'login']);
 Route::post('/logout', [App\Http\Controllers\UserController::class, 'logout']);
+Route::get('/profile/{id}', [App\Http\Controllers\UserController::class, 'profile']);
+Route::put('/profileupdate/{id}', [App\Http\Controllers\UserController::class, 'profileupdate']);
+Route::put('/profileupdateimage/{id}', [App\Http\Controllers\UserController::class, 'profileupdateimage']);
