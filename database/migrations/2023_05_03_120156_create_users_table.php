@@ -17,8 +17,9 @@ return new class extends Migration
             $table->string('email');
             $table->string('account_type');
             $table->integer('tel');
-            $table->binary('image')->nullable();
+            $table->string('image')->default('img_avatar.png');
             $table->string('password');
+            $table->string('email_isVerified')->default("false");
             $table->rememberToken();
             $table->timestamps();
         });

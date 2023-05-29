@@ -5,6 +5,8 @@ import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import VendeurNav from './VendeurNav';
 import { DeleteOutlined  } from '@ant-design/icons';
+import ls from 'localstorage-slim';
+
 const { TextArea } = Input;
 
 const AddArticle = () => {
@@ -25,7 +27,9 @@ const AddArticle = () => {
         formData.append('images[]', Images[i]);
     }
     // const token = sessionStorage.getItem('token');
-    const user =JSON.parse(sessionStorage.getItem('user'));
+    const token = ls.get('token',{decrypt:true});
+    const user = JSON.parse(ls.get('user',{decrypt:true}));
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;;
 
     const onFinish = async (values) => {
         console.log(formData)
@@ -96,11 +100,13 @@ const AddArticle = () => {
                                 label="Description"
                                 name="description"
                                 rules={[{ required: true, message: 'Please enter description' },
-                                { pattern: /^.{250,}$/, message: 'Minimum 250 characters' }]}
+                                // { pattern: /^.{250,}$/, message: 'Minimum 250 characters' }
+                            ]}
                                 style={{ width: "60%", margin: "0 20% 4% 20%", textAlign: "justify" }}>
                                 <TextArea
                                     rows={4}
                                     style={{ resize: 'none' }}
+                                    wrap='true'
                                     showCount
                                     minLength={250}
                                     placeholder="Saisir la Description de votre Article" />

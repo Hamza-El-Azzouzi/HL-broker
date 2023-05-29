@@ -1,6 +1,7 @@
 import { Space, Table, Button } from 'antd';
 import { Link } from 'react-router-dom';
-// import { Switch } from 'antd';
+import ls from 'localstorage-slim';
+
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { Spin, message, Popconfirm } from 'antd';
@@ -30,9 +31,11 @@ export default function ShowArticle() {
       });
   };
 
-  let text = ""
-  const token = sessionStorage.getItem('token');
-  const user =JSON.parse(sessionStorage.getItem('user'));
+  // let text = ""
+  
+  const token = ls.get('token',{decrypt:true});
+  const user = JSON.parse(ls.get('user',{decrypt:true}));
+  axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
   const columns = [
     {
       title: 'Id',

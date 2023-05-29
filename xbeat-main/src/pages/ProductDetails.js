@@ -1,77 +1,78 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { IoMdCheckmark, IoMdClose } from 'react-icons/io';
+import { IoMdCheckmark, IoMdClose, IoIosWarning } from 'react-icons/io';
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination, Navigation, Autoplay } from "swiper";
-
-// Import Swiper styles
+import { Pagination, Autoplay } from "swiper";
+import {  message } from 'antd';
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import '../styles/partials/components/Slider.css'
-// import { GrClose } from "react-icons/gr";
-// import { calculateDiscount, displayMoney } from '../helpers/utils';
+import '../styles/partials/components/Slider.css';
+import '../styles/partials/pages/ProductDetails.css';
+
 import useDocTitle from '../hooks/useDocTitle';
-// import useActive from '../hooks/useActive';
-// import cartContext from '../contexts/cart/cartContext';
-// import productsData from '../data/productsData';
-// import SectionsHead from '../components/common/SectionsHead';
-// import RelatedSlider from '../components/sliders/RelatedSlider';
 import ProductSummary from '../components/product/ProductSummary';
 import Services from '../components/common/Services';
 import axios from 'axios';
 import { Space, Spin } from 'antd';
-// import ProductCarousel from '../components/sliders/ProductCarousel';
+import ls from 'localstorage-slim';
 const ProductDetails = () => {
 
     useDocTitle('Product Details');
 
     const { productId } = useParams();
 
-    // here the 'id' received has 'string-type', so converting it to a 'Number'
-    // const prodId = parseInt(productId);
-
-
-
-    // showing the Product based on the received 'id'
-
     const [products, setProducts] = useState();
     const [images, setImages] = useState();
-
-    const getArticles = () => {
-        axios.get(`http://localhost:8000/api/article/${productId}`).then(response => {
+    const [user, setUser] = useState();
+    const token = ls.get('token', { decrypt: true });
+    const Loginuser = JSON.parse(ls.get('user', { decrypt: true }));
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    const getArticles = async () => {
+        await axios.get(`http://localhost:8000/api/article/${productId}`).then(response => {
             setProducts(response.data)
             console.log(products)
         }
         ).catch(error => console.log(error))
     }
-    const getArticleImage = () => {
-        axios.get(`http://localhost:8000/api/articles/${productId}/images`).then(response => {
+    const getArticleImage = async () => {
+        await axios.get(`http://localhost:8000/api/articles/${productId}/images`).then(response => {
             setImages(response.data)
             console.log(images)
         }
         ).catch(error => console.log(error))
     }
-    useEffect(() => {
-
-
-    }, [])
+    const getUserArticle = async () => {
+        await axios.get(`http://localhost:8000/api/articles/${productId}/user`).then(response => {
+            setUser(response.data)
+            console.log(user)
+        }
+        ).catch(error => console.log(error))
+    }
+    const handleCart = () => {
+        axios.post('http://localhost:8000/api/panier', {
+            id_user: Loginuser.id,
+            id_article: productId
+        }).then(response => {
+            message.success(response.data.message)
+        }).catch(error => {
+            message.error(error.message)
+        })
+    }
 
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         getArticles()
         getArticleImage()
+        getUserArticle()
         setTimeout(() => {
             setIsLoading(false);
-        }, 3000);
-
-
+        }, 5000);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-
-    return isLoading ? (
+    return isLoading  ? (
         <Space size="large" className='Spinner'>
             <Spin tip="Loading..." size="large">
                 <div className="content" />
@@ -86,7 +87,6 @@ const ProductDetails = () => {
                     {/* <div className="prod_details_left_col">
                      */}
                     <div className="prod_details_left_col swipper">
-                        {/* <img src={`http://localhost:8000/images/${products[0].image}`} alt="product-img" /> */}
                         <Swiper
                             slidesPerView={1}
                             spaceBetween={30}
@@ -97,16 +97,13 @@ const ProductDetails = () => {
                             autoplay={{
                                 delay: 2500,
                                 disableOnInteraction: false,
-                              }}
-                            // navigation={true}
+                            }}
                             modules={[Autoplay, Pagination]}
                             className="mySwiper"
                         >
                             {images !== undefined ? (
                                 images.map((x) => (
-
                                     <SwiperSlide key={x.id}><img src={`http://localhost:8000/images/${x.images}`} alt="product-img" /></SwiperSlide>
-
                                 )
                                 )) : (null)}
                         </Swiper>
@@ -115,6 +112,7 @@ const ProductDetails = () => {
                     {/*=== Product Details Right-content ===*/}
                     <div className="prod_details_right_col">
                         <h1 className="prod_details_title">{products[0].name_article}</h1>
+                        <h3>Ville : {products[0].localisation}</h3>
                         <div className="prod_details_ratings">
                             {/* <span className="rating_star">
                                     {
@@ -128,6 +126,7 @@ const ProductDetails = () => {
 
                         <div className="prod_details_price">
                             <div className="price_box">
+                                <h3> Type de Bien : {products[0].type}</h3>
                                 <h3 className="price">
                                     {products[0].type === "Vendre" ? ("Prix : " + products[0].prix + " DH") :
                                         ("Prix Par Jour :" + products[0].prix + "DH")}
@@ -153,24 +152,48 @@ const ProductDetails = () => {
                         <div className="separator"></div>
 
                         <div className="prod_details_offers">
-                            <h4>Offers and Discounts</h4>
-                            <ul>
-                                <li>No Cost EMI on Credit Card</li>
-                                <li>Pay Later & Avail Cashback</li>
-                            </ul>
+                            <img src={`http://localhost:8000/avatar/${user[0].image}`} alt="Avatar" className="avatar" />
+                            <div className='user-info'>
+
+                                <h2 className='prod_details_title'> {user[0].name}</h2>
+                                <p>{user[0].email}</p>
+                            </div>
+                            <div className='report-btn badge'>
+                                <button className='btn-report'><IoIosWarning /></button>
+                            </div>
                         </div>
 
                         <div className="separator"></div>
 
                         <div className="prod_details_buy_btn">
-                            <button
-                                type="button"
-                                className="btn"
-                            // onClick={handleAddItem}
-                            >
-                                Add to cart
-                            </button>
+                           
+                            {   Loginuser ? (
+                                Loginuser.account_type === 'acheteur' ? (
+                                    <> <button
+                                    type="button"
+                                    className="btn"
+                                // onClick={handleAddItem}
+                                >
+                                    Demande
+                                </button>
+                                    <button
+                                    type="button"
+                                    className="favorie outline"
+                                    onClick={handleCart}
+                                >
+                                    Ajouter Aux Favorie
+                                </button>
+                                    </>
+                                    
+                                ):
+                                
+                                (null)
+                            ):(null)
+                            
+                            }
+                            
                         </div>
+
 
                     </div>
                 </div>
@@ -178,12 +201,7 @@ const ProductDetails = () => {
         </section>
 
         <ProductSummary description={products[0].description} />
-
         <section id="related_products" className="section">
-            {/* <div className="container">
-                    <SectionsHead heading="Related Products" />
-                    <RelatedSlider category={category} />
-                </div> */}
         </section>
         <Services />
     </>)

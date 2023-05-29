@@ -1,15 +1,14 @@
 import React from 'react';
-import reviewsData from '../../data/reviewsData';
-import useActive from '../../hooks/useActive';
-import ProductReviews from './ProductReviews';
 
+import useActive from '../../hooks/useActive';
+import ls from 'localstorage-slim';
 
 const ProductSummary = (props) => {
 
-    const { brand, title, info, category, type, connectivity } = props;
 
-    const { active, handleActive, activeClass } = useActive('specs');
 
+    const { active, handleActive, activeClass } = useActive('overview');
+    const Loginuser = JSON.parse(ls.get('user', { decrypt: true }));
 
     return (
         <>
@@ -43,29 +42,24 @@ const ProductSummary = (props) => {
                     {/*===== Product-Summary-Details =====*/}
                     <div className="prod_summary_details">
                         {
-                             active === 'overview' ? (
+                            active === 'overview' ? (
                                 <div className="prod_overview">
                                     {props.description}
-                                    {/* <h3>The <span>{title}</span> {info} provides with fabulous sound quality</h3>
-                                    <ul>
-                                        <li>Sound Tuned to Perfection</li>
-                                        <li>Comfortable to Wear</li>
-                                        <li>Long Hours Playback Time</li>
-                                    </ul>
-                                    <p>Buy the <b>{title} {info}</b> which offers you with fabulous music experience by providing you with awesome sound quality that you can never move on from. Enjoy perfect flexibility and mobility with amazing musical quality with these {category} giving you a truly awesome audio experience. It blends with exceptional sound quality and a range of smart features for an unrivalled listening experience.</p> */}
                                 </div>
                             ) : (
                                 <div className="prod_reviews">
                                     <ul>
-                                        {
-                                            reviewsData.map(item => (
-                                                <ProductReviews
-                                                    key={item.id}
-                                                    {...item}
-                                                />
-                                            ))
-                                        }
+                                        {/* map sur data l ghadi tji mn database */}
                                     </ul>
+                                    {Loginuser ? (
+                                        Loginuser.account_type === 'acheteur' ? (
+                                            <>
+                                                <textarea wrap='true' rows="10" cols="33" className='outline textarea'></textarea>
+                                                <button className='publish-btn'>Publier</button>
+                                            </>
+                                        ) : (null)
+                                    ):(null)}
+
                                 </div>
                             )
 
