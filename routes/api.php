@@ -3,7 +3,6 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -56,5 +55,15 @@ Route::post('/login', [App\Http\Controllers\UserController::class, 'login']);
 Route::get('/userProfile', [App\Http\Controllers\UserController::class, 'userProfile']);
 Route::put('/EmailVerify/{id}', [App\Http\Controllers\UserController::class, 'EmailVerification']);
 Route::post('/logout', [App\Http\Controllers\UserController::class, 'logout']);
+Route::post('/avisstore', [App\Http\Controllers\AvisController::class, 'avisstore']);
 
+Route::get('/avisshow/{id}', [App\Http\Controllers\AvisController::class, 'avisshow']);
+Route::get('/articles/search', [App\Http\Controllers\ArticleController::class, 'search']);
+Route::get('/demandes/{userId}', [App\Http\Controllers\DemandeController::class , 'showDemande']); 
+Route::post('/demandes', [App\Http\Controllers\DemandeController::class , 'AjoutDemande']);
+Route::delete('/demandes/{demandeId}', [App\Http\Controllers\DemandeController::class, 'deleteDemande']);
+// Route::get('/articles/category/{categoryId}', [App\Http\Controllers\ArticleController::class, 'getArticlesByCategory']);
+
+Route::get('/users', [App\Http\Controllers\UserController::class, 'showUsers']);
+Route::get('/articles', [App\Http\Controllers\ArticleController::class, 'getArticlesWithCategory']);
 

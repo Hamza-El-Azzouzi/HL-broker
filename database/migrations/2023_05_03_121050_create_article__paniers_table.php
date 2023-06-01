@@ -27,4 +27,7 @@ return new class extends Migration
     {
         Schema::dropIfExists('article_paniers');
     }
+
+
+    
 };

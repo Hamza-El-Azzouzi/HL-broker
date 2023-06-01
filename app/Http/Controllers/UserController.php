@@ -134,7 +134,10 @@ class UserController extends Controller
         ]);
     }
 
-
+        public function showUsers(){
+            $users = User::all();
+    return response()->json($users);
+        }
 
 
     public function logout()

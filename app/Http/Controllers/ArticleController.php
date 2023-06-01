@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use PhpParser\JsonDecoder;
+use App\Models\Categorie;
 
 class ArticleController extends Controller
 {
@@ -184,4 +185,26 @@ class ArticleController extends Controller
             'message' => 'Article deleted successfully'
         ], 201);
     }
+
+
+    public function search(Request $request)
+    {
+        $searchTerm = $request->input('searchTerm');
+
+        $articles = Article::where('name_article', 'like', '%' . $searchTerm . '%')->get();
+
+        return response()->json($articles);
+    }
+
+
+    public function getArticlesWithCategory()
+    {
+        $articles = Article::select('articles.*', 'categories.name_categorie as category_name', 'users.name as Nome_vendeur')
+            ->join('categories', 'categories.id_categorie', '=', 'articles.id_categorie')
+            ->join('users', 'users.id', '=', 'articles.id_user')
+            ->get();
+    
+        return response()->json($articles);
+    }
+
 }

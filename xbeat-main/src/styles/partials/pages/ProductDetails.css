@@ -41,7 +41,7 @@
   .textarea{
     width: 80%;
     margin-left: 10%;
-    margin-top: 5%;
+    margin-top: 2%;
     font-size: large;
     resize: none;
   }
@@ -56,5 +56,15 @@
     padding-bottom: 0.8rem;
     padding-left: 1.5rem;
     border-radius: 3px;
+
+  }
+  .rate{
+
+    margin-left: 10%;
+    margin-top: 5%;
+    font-size: large;
+    margin-right: 40%;
+
+
 
   }

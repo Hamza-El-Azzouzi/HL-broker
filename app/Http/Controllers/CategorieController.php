@@ -17,10 +17,8 @@ class CategorieController extends Controller
 
         $categorie = Categorie::all();
         return response()->json([
-            'status'=>'success',
-            'data'=>$categorie
-        ]);
-
+             'status'=>'success',
+         'data'=>$categorie]);
     }
     public function store( Request $request){
 
@@ -30,5 +28,6 @@ class CategorieController extends Controller
         $categorie->save();
 
     }
+
     
 }

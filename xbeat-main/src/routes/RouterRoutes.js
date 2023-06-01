@@ -21,6 +21,9 @@ import AuthorizedPage from '../pages/authorized';
 import Demande from '../components/acheteur/Demande';
 import VerificationCodeInput from '../components/form/verificationCode';
 import EmailVerify from '../components/form/EmailVerify';
+
+import ShowUsers  from '../Admin/showUers';
+import ShowArticles from '../Admin/showArticle';
 const RouterRoutes = () => {
     // const history =useNavigate()
     useScrollRestore();
@@ -42,6 +45,8 @@ const RouterRoutes = () => {
                 <Route path="/all-products" element={<AllProducts />} />
                 <Route path="/product-details/:productId" element={<ProductDetails />} />
                 <Route path='/EmailVerify' element={<EmailVerify />} />
+                <Route path='/User' element={<ShowUsers />} />
+                <Route path='/ShowArticles' element={<ShowArticles />} />
                 {isLoggedIn ? (
 
                     user.account_type === 'vendeur' ? (
