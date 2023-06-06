@@ -11,6 +11,8 @@ class Avis extends Model
     protected $fillable = [
         'nbr_etoile',
         'avis',
+        'id_user',
+        'id_article',
     ];
     public function User(){
         $this->belongsTo(User::class);

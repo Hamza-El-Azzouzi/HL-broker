@@ -15,7 +15,7 @@ class PanierController extends Controller
     public function index(Request $request)
     {
         // 
-    
+
     }
 
     /**
@@ -26,8 +26,9 @@ class PanierController extends Controller
         //
     }
 
-    public function getArticlePanier( $id){
-        $article = DB::select('SELECT articles.* , paniers.id_panier FROM paniers , articles JOIN article_panier ON articles.id_article = article_panier.id_article WHERE paniers.id_user = ?',[$id]);
+    public function getArticlePanier($id)
+    {
+        $article = DB::select('SELECT articles.* , paniers.* FROM paniers , articles JOIN article_panier ON articles.id_article = article_panier.id_article WHERE paniers.id_user = ?', [$id]);
 
         // DB::table('articles,paniers')
         // ->join('article_panier' , 'articles.id_article' ,'=', 'article_panier.id_article')
@@ -37,7 +38,7 @@ class PanierController extends Controller
 
         return response()->json([
             'message' => 'article saved successfully',
-            'result'=>$article
+            'result' => $article
         ], 201);
     }
     /**
@@ -59,8 +60,7 @@ class PanierController extends Controller
                 return response()->json([
                     'message' => 'article saved successfully'
                 ], 201);
-            }
-            else{
+            } else {
                 return response()->json([
                     'message' => 'already saved'
                 ], 201);
@@ -83,20 +83,20 @@ class PanierController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Request $request ,$id)
+    public function show(Request $request, $id)
     {
         //
-        $article = 
+        $article =
 
-        DB::table('articles')
-        ->join('article_panier' , 'articles.id_article' ,'=', 'article_panier.id_article')
-        ->join('paniers' , 'paniers.id_panier' ,'=' ,'article_panier.id_panier')
-        ->where( 'paniers.id_user' ,'=' ,$id)->get('articles.*');
+            DB::table('articles')
+            ->join('article_panier', 'articles.id_article', '=', 'article_panier.id_article')
+            ->join('paniers', 'paniers.id_panier', '=', 'article_panier.id_panier')
+            ->where('paniers.id_user', '=', $id)->get('articles.*');
         // dd($article);
 
         return response()->json([
             'message' => 'loaded successfully',
-            'result'=>$article
+            'result' => $article
         ], 201);
     }
 
@@ -119,8 +119,17 @@ class PanierController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Request $request ,$id_article ,$id_user)
+    public function deleteArticle($id_user, $id_article)
     {
-        //
+        //DB::select(' SELECT *FROM paniers where id_user = ?' ,[ $id_user]);
+
+        // $panierID = Panier::where('id_user' , $id_user)->get('id_panier');
+        // Article_Panier::where('id_panier',$panierID)->where('id_article',$id_article)->delete();
+        $panierID = Panier::where('id_user', $id_user)->pluck('id_panier')->first();
+        Article_Panier::where('id_panier', $panierID)->where('id_article', $id_article)->delete();
+        return response()->json([
+            'message' => 'deleted succesfully',
+            'panier' => $panierID
+        ]);
     }
 }

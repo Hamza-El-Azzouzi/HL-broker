@@ -11,17 +11,15 @@ class Article extends Model
     protected $fillable = [
         'id_categorie',
         'id_user',
-        'id_vendeur',
         'id_acheteur',
         'name_article',
         'description',
         'type',
         'prix',
-        'image1',
-        'image2',
-        'image3',
-        'image4',
+        'image',
+        'localisation',
         'disponibilite',
+        'created_at'
     ];
     public function Categorie()
     {

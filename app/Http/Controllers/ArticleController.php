@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
+use App\Models\Categorie;
 use App\Models\Image;
+use Carbon\Carbon;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -20,8 +22,8 @@ class ArticleController extends Controller
     public function index()
     {
         //
-        $article = Article::where();
-        // $article = Article::all();
+        // $article = Article::where();
+        $article = Article::all();
         return response()->json([
             'success' => 'greaat work',
             'data' => $article
@@ -110,10 +112,11 @@ class ArticleController extends Controller
             'name_article' => $request->name_article,
             'description' => $request->description,
             'image' =>$files[0]->getClientOriginalName(),
-            'localisation' =>"taza",
+            'localisation' =>$request->localisation,
             'prix' => $request->prix,
             'type' => $request->type,
             'disponibilite' => $request->disponibilite,
+            'created_at'=>Carbon::now()
         ]);
         foreach ($files as $file) {
            $file->move('images/',$file->getClientOriginalName());
@@ -171,6 +174,46 @@ class ArticleController extends Controller
 
         
 
+    }
+    public function getArtcleCategorie($categorie)
+    {
+        //
+        $id_categorie = Categorie::where('name_categorie', $categorie)->pluck('id_categorie')->first();
+    //    $id_categorie = Categorie::where('name_categorie',$categorie);
+        $article =Article::where('id_categorie',$id_categorie)->get();
+        return response()->json($article);
+    }
+
+    public function getArticlefiltered($type , $categorie, $min,$max){
+        
+        $id_categorie = Categorie::where('name_categorie', $categorie)->pluck('id_categorie')->first();
+            $article = DB::table('articles')
+            ->where('type',$type)
+            ->where('id_categorie',$id_categorie)
+            ->whereBetween('prix', [$min, $max])->get();
+            return response()->json($article);
+        
+       
+       
+
+    }
+    public function search(Request $request)
+    {
+        $searchTerm = $request->input('searchTerm');
+
+        $articles = Article::where('name_article', 'like', '%' . $searchTerm . '%')->get();
+
+        return response()->json($articles);
+    }
+
+    public function getArticlesWithCategory()
+    {
+        $articles = Article::select('articles.*', 'categories.name_categorie as category_name', 'users.name as Nome_vendeur')
+            ->join('categories', 'categories.id_categorie', '=', 'articles.id_categorie')
+            ->join('users', 'users.id', '=', 'articles.id_user')
+            ->get();
+    
+        return response()->json($articles);
     }
 
     /**

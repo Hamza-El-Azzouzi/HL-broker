@@ -1,24 +1,10 @@
-{{--
-<!DOCTYPE html>
-<html>
-
-<head>
-    <title>Verification Code</title>
-</head>
-
-<body>
-    <h1>Verification Code</h1>
-    <p>Your verification code is: {{ $verificationCode }}</p>
-</body>
-
-</html> --}}
 
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml"
     xmlns:o="urn:schemas-microsoft-com:office:office">
 
 <head>
-    <title> Welcome to [Coded Mails] </title>
+    <title> Welcome to H-L broker</title>
     <!--[if !mso]><!-- -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <!--<![endif]-->

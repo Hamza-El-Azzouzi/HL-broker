@@ -20,6 +20,15 @@ return new class extends Migration
             $table->string('image')->default('img_avatar.png');
             $table->string('password');
             $table->string('email_isVerified')->default("false");
+            $table->string('banned')->default("false");
+            $table->string('adresse')->nullable();
+            $table->string('city')->nullable();
+            $table->string('pays')->nullable();
+            $table->string('codezip')->nullable();
+            $table->string('urlFb')->nullable();
+            $table->string('urlYtb')->nullable();
+            $table->string('urlInsta')->nullable();
+            $table->string('description')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
