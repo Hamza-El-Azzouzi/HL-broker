@@ -24,7 +24,7 @@ export default function ShowDemande() {
           console.error('Erreur lors de la récupération des données de demande:', error);
         });
     }
-  }, [loginUser, token]);
+  }, []);
 
   const handleDelete = (demandeId) => {
     axios.delete(`http://localhost:8000/api/demandes/${demandeId}`, {
@@ -52,13 +52,18 @@ export default function ShowDemande() {
         console.error('Erreur lors de la suppression de la demande:', error);
         message.error('Erreur lors de la suppression de la demande');
       });
-    };
-    const columns = [
-      {
-        title: 'Article',
-        dataIndex: 'name_article',
-        key: 'name_article',
-      },
+  };
+  const columns = [
+    {
+      title: 'Id',
+      dataIndex: 'id_demande',
+      key: 'id_demande',
+    },
+    {
+      title: 'Article',
+      dataIndex: 'name_article',
+      key: 'name_article',
+    },
     {
       title: 'Nom Acheteur',
       dataIndex: 'name',
@@ -74,27 +79,37 @@ export default function ShowDemande() {
       dataIndex: 'tel',
       key: 'tel',
     },
-  
-      {
-        title: 'Prix Article',
-        dataIndex: 'prix',
-        key: 'prix',
-      },{
-        title: 'Actions',
-        key: 'actions',
-        render: (_, record) => (
-          <Popconfirm
-            title="Êtes-vous sûr de vouloir supprimer cette demande?"
-            onConfirm={() => handleDelete(record.id_demande)}
-            okText="Oui"
-            cancelText="Non"
-          >
-            <Button type="link">Supprimer</Button>
-          </Popconfirm>
-        ),
-      },
-    ];
-  
+
+    {
+      title: 'Prix Article',
+      dataIndex: 'prix',
+      key: 'prix',
+    }, {
+      title: 'Actions',
+      key: 'actions',
+      render: (_, record) => (
+        <Popconfirm
+          title="Êtes-vous sûr de vouloir supprimer cette demande?"
+          onConfirm={() => handleDelete(record.id_demande)}
+          okText="Oui"
+          cancelText="Non"
+        >
+          <Button type="link">Supprimer</Button>
+        </Popconfirm>
+      ),
+    },
+  ];
+  const dataTable = data !== undefined ? (
+    data.map(x => ({
+      id_demande: x.id_demande,
+      name: x.name,
+      email: x.email,
+      tel: x.tel,
+      prix: x.prix,
+      name_article: x.name_article,
+      type: x.type,
+
+    }))) : (null)
   return (
     <main>
       <section className="section">
@@ -102,7 +117,7 @@ export default function ShowDemande() {
           <VendeurNav />
           <div className='wrapper'>
             <div className="table">
-              <Table columns={columns} dataSource={data} />
+              <Table columns={columns} dataSource={dataTable} />
             </div>
           </div>
         </div>

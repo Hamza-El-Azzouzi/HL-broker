@@ -76,4 +76,17 @@ class DemandeController extends Controller
         $total = DB::table('demandes')->count();
         return response()->json( $total );
      }
+     public function getTotalDemandeForVendeur($userId){
+
+        $user = User::find($userId);
+       
+if ($user->account_type === 'vendeur') {
+    $demandes = Demande::join('articles', 'articles.id_article', '=', 'demandes.id_article')
+            ->where('articles.id_user', $userId)
+           
+            ->count();
+
+    return response()->json($demandes);
+}
+     }
 }

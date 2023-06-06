@@ -84,8 +84,6 @@ class UserController extends Controller
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
-
-        // $verificationCode = mt_rand(100000, 999999);
         $verificationCode = mt_rand(100000, 999999);
 
         if (Auth::attempt($credentials)) {
@@ -113,15 +111,12 @@ class UserController extends Controller
                             'token' => $token,
                             'user' => $user,
                             'login' => $verificationCode
-
                         ], 200);
                         }
-                        
                     }
             }
             return response()->json(['error' => 'Unauthenticated'], 400);
         }
-        // Authentication failed
         return response()->json(['error' => 'Invalid Email or Password'], 400);
     }
 

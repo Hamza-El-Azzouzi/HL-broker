@@ -1,13 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { AiOutlineSearch, AiOutlineShoppingCart, AiOutlineUser } from 'react-icons/ai';
-// import { dropdownMenu } from '../../data/headerData';
+import { AiOutlineSearch, AiOutlineUser } from 'react-icons/ai';
 import commonContext from '../../contexts/common/commonContext';
 import cartContext from '../../contexts/cart/cartContext';
 import AccountForm from '../form/AccountForm';
 import SearchBar from './SearchBar';
 import axios from 'axios';
-
+import { MdFavorite } from "react-icons/md";
 import ls from 'localstorage-slim';
 const Header = () => {
 
@@ -21,10 +20,6 @@ const Header = () => {
     const isLoggedIn = !!token && !!user;
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
-
-
-
-
     const handleLogout = () => {
         axios.post('http://localhost:8000/api/logout').then(
             ls.remove('token'),
@@ -34,7 +29,6 @@ const Header = () => {
     }
 
 
-    // handle the sticky-header
     useEffect(() => {
 
         const handleIsSticky = () => window.scrollY >= 50 ? setIsSticky(true) : setIsSticky(false);
@@ -70,14 +64,14 @@ const Header = () => {
                                 user.account_type === "acheteur" ? (
                                     <div className="cart_action">
                                         <Link to="/cart">
-                                            <AiOutlineShoppingCart />
+                                            <MdFavorite />
                                             {
                                                 cartQuantity > 0 && (
                                                     <span className="badge">{cartQuantity}</span>
                                                 )
                                             }
                                         </Link>
-                                        <div className="tooltip">Cart</div>
+                                        <div className="tooltip">Favorie</div>
                                     </div>
                                 ) : (null)
                             ) : (null)}

@@ -40,19 +40,21 @@ const UserByType = (props) => {
       maintainAspectRatio: false,
     };
 
-    new Chart(ctx, {
+   const myChart =  new Chart(ctx, {
       type: 'pie',
       data: data,
       options: options,
     });
-
+    return () => {
+      myChart.destroy();
+  };
   }, [])
 
 
   return (
     <Card extra="!p-[20px] text-center">
       <div className="flex justify-between">
-        <canvas ref={chartContainer}></canvas>
+        <canvas ref={chartContainer} ></canvas>
 
       </div>
 

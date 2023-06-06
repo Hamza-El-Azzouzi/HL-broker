@@ -1,5 +1,5 @@
 
-import ArticlesByMonth from "views/admin/default/components/ArticlesByMonth";
+
 import UserByType from "views/admin/default/components/UserByType";
 import axios from "axios";
 

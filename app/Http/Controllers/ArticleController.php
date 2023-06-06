@@ -216,6 +216,11 @@ class ArticleController extends Controller
         return response()->json($articles);
     }
 
+    public function getcountArticle($id){
+        $article = DB::table('articles')->where('id_user',$id)->count();
+        return response()->json($article);
+    }
+
     /**
      * Remove the specified resource from storage.
      */
