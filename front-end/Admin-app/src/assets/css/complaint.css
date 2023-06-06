@@ -1,0 +1,11 @@
+.cardComplaint{
+	display: inline-block;
+	height: 200px;
+	margin: 0 2% 2% 2%;
+}
+
+.ant-card{
+	height: 300px;
+	word-wrap: break-word;
+	overflow:auto;
+}

@@ -1,0 +1,193 @@
+fieldset
+{
+
+  padding:16px;	
+}
+legend
+{
+  width: 100px;
+}
+
+.profile_img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+  /* padding: 40px; */
+
+
+
+.cardinfo {
+  width: 25%;
+  height: max-content;
+  object-fit: cover;
+  margin-left: 5%;
+  border: 10px solid #ffffff;
+  background-color: #ffffff;
+  box-shadow: #fafafa;
+
+}
+
+.cardform {
+  width: 65%;
+  height: max-content;
+  object-fit: cover;
+  margin-left: 35%;
+  margin-top: -34%;
+  border: 10px solid #ffffff;
+  background-color: #ffffff;
+  box-shadow: #fafafa;
+
+}
+
+
+.avatar {
+  font-size: 90px;
+  color: #b0a4a4;
+
+
+}
+
+/* .card-header{
+  width: 180px;
+} */
+h3{
+  text-align: center;
+}
+.profile .card h3 {
+  font-size: 20px;
+  font-weight: 700;
+  box-shadow: #000;
+  /* background-color: #dd2121; */
+}
+
+.profile .card p {
+  font-size: 16px;
+  color: rgb(255, 255, 255)5f5;
+  box-shadow: #000;
+  /* background-color: #dd2121; */
+}
+
+p {
+  text-align: center;
+  font: size 40px;
+  font-family: Lucida Console Monaco;
+}
+
+
+.profile .profile {
+  font-size: 14px;
+  padding: 5px 10px;
+  color: #000;
+  box-shadow: #000;
+  /* background-color: #dd2121; */
+  display: contents;
+  padding-bottom: 200px;
+}
+
+.bbtn {
+  margin-left: 20%;
+}
+
+.btn-group {
+
+  border-radius: 12px;
+  padding: 5px;
+  display: inline;
+  /* the default for span */
+  width: 100px;
+  height: 100px;
+  text-align: center;
+
+
+}
+
+.fa {
+
+  display: inline-block;
+  width: 60px;
+  font-size: 30px;
+
+
+}
+
+.border {
+  border-color: #000000;
+
+}
+
+legend .scheduler-border {
+  border:none;
+  width:100px;
+  color: #000;
+}
+
+
+
+
+.btn-danger {
+
+  box-sizing: content-box;
+
+  border-radius: 4px;
+  padding-left: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-right: 50px;
+  right: 5px;
+  margin-right: 5px;
+  /* float: right;
+left: 100%; */
+
+}
+
+.desc {
+  padding: 50px;
+
+}
+
+
+
+
+#register {
+  width: 85%;
+  margin: 7% 7.5% 7% 7.5%;
+}
+
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -5px;
+  margin-left: -5px;
+}
+
+.form-row .col-md-6 {
+  flex: 0 0 50%;
+  max-width: 50%;
+  padding-right: 5px;
+  padding-left: 5px;
+}
+
+.form-row .form-item {
+  padding: 10px;
+}
+
+
+
+
+/* Main section styles */
+
+
+
+/* Optional: Add additional styles as needed */
+
+/* Responsive styles */
+/* @media (max-width: 768px) {
+
+  
+    .info,
+    .form {
+      min-width: auto;
+      margin-right: 0;
+    }
+  } */

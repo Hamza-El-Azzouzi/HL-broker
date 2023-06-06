@@ -16,10 +16,7 @@ class CategorieController extends Controller
     public function index(){
 
         $categorie = Categorie::all();
-        return response()->json([
-            'status'=>'success',
-            'data'=>$categorie
-        ]);
+        return response()->json($categorie);
 
     }
     public function store( Request $request){
